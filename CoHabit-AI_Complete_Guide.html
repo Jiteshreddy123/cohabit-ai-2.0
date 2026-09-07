@@ -1,0 +1,859 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>CoHabit-AI Complete Project Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,sans-serif;line-height:1.8;color:#111827;background:#f8f9fb}
+.wrapper{max-width:920px;margin:0 auto;padding:48px 40px;background:white;min-height:100vh}
+.banner{background:linear-gradient(135deg,#4338ca,#7c3aed);color:white;padding:40px;border-radius:16px;margin-bottom:40px}
+.banner h1{font-size:2.4rem;font-weight:800;border-bottom:3px solid rgba(255,255,255,0.4);padding-bottom:14px;margin-bottom:8px;color:white}
+.banner p{color:rgba(255,255,255,0.85);font-size:1rem;margin:8px 0 16px}
+.badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:0.75rem;font-weight:600;background:rgba(255,255,255,0.2);color:white;margin:3px}
+h2{font-size:1.55rem;font-weight:700;color:#111827;margin:48px 0 18px;padding-bottom:10px;border-bottom:2px solid #e5e7eb}
+h3{font-size:1.15rem;font-weight:600;color:#4338ca;margin:32px 0 12px}
+h4{font-size:1rem;font-weight:600;color:#1f2937;margin:24px 0 10px;border-left:3px solid #6366f1;padding-left:10px}
+p{margin:10px 0;color:#374151}
+strong{color:#111827;font-weight:600}
+code{font-family:"Fira Code",monospace;background:#f1f5f9;color:#be185d;padding:2px 7px;border-radius:4px;font-size:0.85rem}
+pre{background:#1e293b;color:#e2e8f0;padding:20px 24px;border-radius:10px;margin:16px 0;overflow-x:auto;font-family:"Fira Code",monospace;font-size:0.82rem;line-height:1.65;border-left:4px solid #6366f1}
+pre code{background:none;color:inherit;padding:0;font-size:inherit}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:0.9rem;border-radius:8px;overflow:hidden}
+thead tr{background:#6366f1}
+th{color:white;padding:12px 16px;text-align:left;font-weight:600}
+td{padding:10px 16px;border-bottom:1px solid #e5e7eb;color:#374151}
+tr:nth-child(even) td{background:#f8f9fb}
+ul,ol{margin:10px 0 10px 28px;color:#374151}
+li{margin:5px 0}
+hr{border:none;border-top:1px solid #e5e7eb;margin:32px 0}
+blockquote{background:#eff6ff;border-left:4px solid #6366f1;padding:14px 20px;border-radius:0 8px 8px 0;margin:16px 0;color:#1e40af;font-style:italic}
+@media print{body{background:white}.wrapper{padding:20px}pre,table{page-break-inside:avoid}}
+</style></head><body><div class="wrapper">
+<div class="banner">
+<h1>CoHabit-AI — Complete Project Guide</h1>
+<p>From Zero to Understanding: Every File, Every Concept, Every Line of Logic</p>
+<span class="badge">React 18</span><span class="badge">FastAPI</span><span class="badge">PostgreSQL</span><span class="badge">Google Gemini</span><span class="badge">OR-Tools CP-SAT</span>
+</div>
+<p>﻿# CoHabit-AI — Complete Project Guide</p>
+<h3>From Zero to Understanding: Every File, Every Concept, Every Line of Logic</h3>
+<br>
+<blockquote>Who is this for?</blockquote>
+<blockquote>This guide is written for a beginner who has never seen this codebase. You will learn what every folder, every file, and every piece of code does and WHY it was written that way.</blockquote>
+<br>
+<hr>
+<br>
+<h2>1. What is CoHabit-AI?</h2>
+<br>
+<p>CoHabit-AI is a web application for college hostel administrators. It automatically assigns students to rooms based on personality compatibility — not randomly.</p>
+<br>
+<h3>The Problem</h3>
+<li>Random allocation = roommate conflicts</li>
+<li>Manual allocation = admin spends hours</li>
+<br>
+<h3>The Solution</h3>
+<li>Stage 1 — AI Interview: Google Gemini chatbot interviews each student</li>
+<li>Stage 2 — Smart Allocation: OR-Tools optimizer groups compatible students</li>
+<br>
+<hr>
+<br>
+<h2>2. The Big Picture (7-Step Flow)</h2>
+<br>
+<p>Step 1: Create Session → define room inventory (e.g. 20 double rooms)</p>
+<p>Step 2: Enroll Students → add name, roll no, branch, gender</p>
+<p>Step 3: AI Interviews → Gemini asks lifestyle questions, stores conversation</p>
+<p>Step 4: Trait Extraction → Gemini reads transcript → outputs structured JSON</p>
+<p>Step 5: Compatibility Scoring → ML scorer gives 0-100 score to every pair</p>
+<p>Step 6: Room Allocation → OR-Tools finds globally optimal assignment</p>
+<p>Step 7: View Results → Admin sees room cards with members and scores</p>
+<br>
+<hr>
+<br>
+<h2>3. Technology Stack</h2>
+<br>
+<table><thead><tr><th>Layer</th><th>Technology</th><th>Why</th></tr></thead><tbody>
+<tr><td>Frontend</td><td>React 18</td><td>Component-based, fast re-renders</td></tr>
+<tr><td>Routing</td><td>React Router v6</td><td>Single-page app navigation</td></tr>
+<tr><td>Styling</td><td>Tailwind CSS</td><td>Utility-first, rapid responsive design</td></tr>
+<tr><td>HTTP Client</td><td>Axios</td><td>JWT interceptors, promise-based</td></tr>
+<tr><td>Backend</td><td>FastAPI (Python)</td><td>Fast, auto-generates API docs</td></tr>
+<tr><td>Database</td><td>PostgreSQL</td><td>Relational DB, JSONB for inventory</td></tr>
+<tr><td>ORM</td><td>SQLAlchemy</td><td>Python objects map to DB tables</td></tr>
+<tr><td>Validation</td><td>Pydantic</td><td>Type-safe schemas</td></tr>
+<tr><td>Auth</td><td>JWT</td><td>Stateless authentication</td></tr>
+<tr><td>AI Chatbot</td><td>Google Gemini 2.5 Flash</td><td>Conversational LLM</td></tr>
+<tr><td>Optimization</td><td>Google OR-Tools CP-SAT</td><td>Industrial constraint solver</td></tr>
+</tbody></table>
+<br>
+<hr>
+<br>
+<h2>4. Project Folder Structure</h2>
+<br>
+<p>backend/</p>
+<p>  app.py                  &lt;- Entry point. Creates FastAPI app, registers routers, error handlers</p>
+<p>  config.py               &lt;- Reads .env settings (DB credentials, GEMINI_API_KEY, JWT_SECRET)</p>
+<p>  database.py             &lt;- Creates SQLAlchemy engine + connection pool + get_db() dependency</p>
+<p>  .env                    &lt;- Your actual secrets. NEVER commit to git!</p>
+<p>  .env.example            &lt;- Template for teammates</p>
+<br>
+<p>  models/                 &lt;- SQLAlchemy ORM (Python classes = PostgreSQL tables)</p>
+<p>    college.py            &lt;- college table: id, name, email, password(hashed)</p>
+<p>    allocation_session.py &lt;- allocation_sessions table: inventory, status, college_id</p>
+<p>    student.py            &lt;- student table: name, roll_number, gender, branch, year</p>
+<p>    interview.py          &lt;- interview table: student_id, conversation (JSON text)</p>
+<p>    traits.py             &lt;- traits table: 10 personality fields per student</p>
+<p>    compatibility_score.py &lt;- compatibility_score table: pairwise scores 0-100</p>
+<p>    recommendation.py     &lt;- recommendations table: one allocated room</p>
+<p>    recommendation_member.py &lt;- recommendation_members: junction (room &lt;-&gt; student)</p>
+<br>
+<p>  schemas/                &lt;- Pydantic schemas. What the API accepts and returns.</p>
+<p>    college.py            &lt;- CollegeCreate, CollegeResponse, LoginRequest, TokenResponse</p>
+<p>    allocation_session.py &lt;- AllocationSessionCreate, AllocationSessionResponse</p>
+<p>    student.py            &lt;- StudentCreate, StudentUpdate, StudentResponse</p>
+<p>    interview.py          &lt;- InterviewMessageRequest, InterviewResponse</p>
+<p>    recommendation.py     &lt;- RecommendationResponse (with nested members)</p>
+<br>
+<p>  routes/                 &lt;- FastAPI URL handlers</p>
+<p>    auth.py               &lt;- POST /register, POST /login</p>
+<p>    allocation_sessions.py &lt;- GET /, POST /, PUT /{id}/room-inventory, PUT /{id}/status</p>
+<p>    students.py           &lt;- GET /, POST /, GET /{id}, PUT /{id}, DELETE /{id}</p>
+<p>    interviews.py         &lt;- POST /start, POST /message, POST /end</p>
+<p>    traits.py             &lt;- GET /traits/{student_id}</p>
+<p>    recommendations.py    &lt;- GET /{session_id}, POST /generate/{session_id}</p>
+<br>
+<p>  services/               &lt;- Business logic (between routes and DB)</p>
+<p>    auth_service.py       &lt;- hash_password(), create_access_token(), verify_token()</p>
+<p>    ai_service.py         &lt;- get_or_create_interview(), process_interview_end()</p>
+<p>    allocation_session_service.py &lt;- create/update session lifecycle</p>
+<br>
+<p>  crud/                   &lt;- Raw database operations (Create Read Update Delete)</p>
+<p>    college.py            &lt;- get_college_by_email(), create_college()</p>
+<p>    allocation_session.py &lt;- get_session_by_id(), create_session(), update_inventory()</p>
+<br>
+<p>  ai/                     &lt;- All Gemini LLM code</p>
+<p>    interview_bot.py      &lt;- InterviewBot class: wraps Gemini chat session</p>
+<p>    trait_extractor.py    &lt;- extract_traits(): reads transcript → outputs JSON traits</p>
+<br>
+<p>  ml/                     &lt;- Scoring and optimization</p>
+<p>    scorer.py             &lt;- calculate_compatibility() → float 0-100</p>
+<p>    allocator.py          &lt;- allocate_rooms() using OR-Tools CP-SAT solver</p>
+<br>
+<p>  utils/</p>
+<p>    exceptions.py         &lt;- Custom errors: NotFoundError, ValidationError, AuthenticationError</p>
+<br>
+<p>frontend/src/</p>
+<p>  App.js                  &lt;- Root: defines all URL routes with React Router</p>
+<p>  index.js                &lt;- Mounts &lt;App /&gt; into public/index.html</p>
+<br>
+<p>  api/</p>
+<p>    apiClient.js          &lt;- Axios base instance. REQUEST interceptor adds JWT token.</p>
+<p>                             RESPONSE interceptor: 401 → force logout.</p>
+<p>    authApi.js            &lt;- login(), register(), isAuthenticated(), getProfile()</p>
+<p>    sessionApi.js         &lt;- getSessions(), getSession(), createSession()</p>
+<p>    studentApi.js         &lt;- getStudents(), getStudentById(), createStudent()</p>
+<p>    interviewApi.js       &lt;- startInterview(), sendMessage(), endInterview()</p>
+<p>    recommendationApi.js  &lt;- getRecommendations(), generateRecommendations()</p>
+<p>    traitApi.js           &lt;- getStudentTraits()</p>
+<br>
+<p>  contexts/</p>
+<p>    ThemeContext.jsx       &lt;- Global dark/light mode. Persisted in localStorage.</p>
+<br>
+<p>  layouts/</p>
+<p>    PageLayout.jsx         &lt;- Wraps all protected pages: &lt;Navbar&gt; + &lt;Sidebar&gt; + {children}</p>
+<br>
+<p>  components/</p>
+<p>    Navbar.jsx             &lt;- Top bar: college name, dark mode toggle, logout button</p>
+<p>    Sidebar.jsx            &lt;- Left nav: links to all 5 main sections (NavLink with isActive)</p>
+<p>    ProtectedRoute.jsx     &lt;- Checks localStorage for JWT. Redirects to /login if missing.</p>
+<br>
+<p>  pages/</p>
+<p>    Landing.jsx            &lt;- Public marketing page ("/"). Hero + features + CTA.</p>
+<p>    login.jsx              &lt;- Login + Register (tab toggle). Saves token to localStorage.</p>
+<p>    Dashboard.jsx          &lt;- Stats (sessions, capacity, students, vacancies) + quick actions.</p>
+<p>    SessionList.jsx        &lt;- Table of sessions. Set Active button.</p>
+<p>    SessionForm.jsx        &lt;- Create new session. Room inventory input.</p>
+<p>    SessionStructure.jsx   &lt;- Edit room inventory. Change session status.</p>
+<p>    StudentList.jsx        &lt;- Searchable + sortable student table.</p>
+<p>    StudentForm.jsx        &lt;- Add/edit student form. POST or PUT depending on mode.</p>
+<p>    StudentDetails.jsx     &lt;- Student profile: academic info + AI insights section.</p>
+<p>    Interview.jsx          &lt;- Two-panel: student list + AI chat window. KEY PAGE.</p>
+<p>    InterviewDetails.jsx   &lt;- View extracted traits for one student.</p>
+<p>    Recommendations.jsx    &lt;- Grid of room cards with avatar overlaps. KEY PAGE.</p>
+<p>    RoomDetails.jsx        &lt;- Full room detail: members, score, AI reason. KEY PAGE.</p>
+<p>    Profile.jsx            &lt;- Admin college profile settings.</p>
+<p>    NotFound.jsx           &lt;- 404 page.</p>
+<br>
+<p>database/</p>
+<p>  schema.sql              &lt;- PostgreSQL DDL for all 8 tables with constraints.</p>
+<br>
+<hr>
+<br>
+<h2>5. The Database — All 8 Tables Explained</h2>
+<br>
+<h3>Entity Relationships</h3>
+<p>college (1) → (∞) allocation_sessions (1) → (∞) student</p>
+<p>                                                    |</p>
+<p>                                                    ├→ (1) interview      (conversation JSON)</p>
+<p>                                                    └→ (1) traits         (personality profile)</p>
+<p>allocation_sessions → (∞) compatibility_score      (pairwise scores)</p>
+<p>allocation_sessions → (∞) recommendations → (∞) recommendation_members</p>
+<br>
+<hr>
+<br>
+<h3>Table: college</h3>
+<p>id       → auto-increment primary key</p>
+<p>name     → "IIT Bombay"</p>
+<p>email    → login credential, UNIQUE</p>
+<p>password → bcrypt hash (NEVER plain text)</p>
+<br>
+<p>WHY: Multi-tenant — each college sees only its own data.</p>
+<br>
+<hr>
+<br>
+<h3>Table: allocation_sessions</h3>
+<p>id             → primary key</p>
+<p>college_id     → FK to college</p>
+<p>title          → "Batch 2025 First Year Hostel"</p>
+<p>academic_year  → "2025-26"</p>
+<p>session_size   → total students expected</p>
+<p>room_inventory → JSONB: {"2": 20, "3": 10} = 20 double rooms + 10 triple rooms</p>
+<p>session_status → "Draft" | "Active" | "Completed"</p>
+<br>
+<p>WHY JSONB: Any mix of room sizes without schema changes. PostgreSQL JSONB is stored in binary for fast querying.</p>
+<br>
+<hr>
+<br>
+<h3>Table: student</h3>
+<p>id                    → primary key</p>
+<p>college_id            → FK to college</p>
+<p>allocation_session_id → FK to allocation_sessions</p>
+<p>name                  → "Ravi Kumar"</p>
+<p>roll_number           → "CS2024001" — UNIQUE</p>
+<p>email                 → UNIQUE</p>
+<p>branch                → "Computer Science"</p>
+<p>year_of_study         → 1–4</p>
+<p>gender                → "Male" | "Female" | "Other"  ← HARD CONSTRAINT (no mixed-gender rooms)</p>
+<br>
+<hr>
+<br>
+<h3>Table: interview</h3>
+<p>id           → primary key</p>
+<p>student_id   → FK to student</p>
+<p>conversation → TEXT containing JSON array:</p>
+<p>               [{"role":"model","text":"Hi! Please answer..."},</p>
+<p>                {"role":"user","text":"I sleep at 11pm..."}]</p>
+<p>completed_at → timestamp</p>
+<br>
+<p>WHY TEXT not a separate messages table: Gemini API returns a list. We serialize it once</p>
+<p>with json.dumps(), store it, and json.loads() when needed. Avoids complex joins.</p>
+<br>
+<hr>
+<br>
+<h3>Table: traits (Personality Profile)</h3>
+<p>student_id                 → UNIQUE FK to student (one profile per student)</p>
+<p>sleep_time                 → "23:00"</p>
+<p>wake_time                  → "06:30"</p>
+<p>study_style                → "alone in silence"</p>
+<p>noise_tolerance            → FLOAT 0.0–1.0 (0=hates noise, 1=fully tolerant)</p>
+<p>cleanliness                → FLOAT 0.0–1.0 (0=messy, 1=extremely neat)</p>
+<p>social_level               → FLOAT 0.0–1.0 (0=extreme introvert, 1=extrovert)</p>
+<p>preferred_room_size        → INT 1–4 (HARD CONSTRAINT for optimizer)</p>
+<p>flexible_preferences       → "Can compromise on noise level"</p>
+<p>non_negotiable_preferences → "Must have quiet study time after 10pm"</p>
+<p>personality_summary        → AI-written 2-3 sentence description</p>
+<br>
+<p>WHY 0–1 floats: Normalization makes subtraction meaningful. |0.9 – 0.2| = 0.7 = very different.</p>
+<br>
+<hr>
+<br>
+<h3>Table: compatibility_score</h3>
+<p>allocation_session_id → FK to session</p>
+<p>student1_id           → FK to student</p>
+<p>student2_id           → FK to student</p>
+<p>compatibility_score   → DECIMAL 0.00–100.00</p>
+<br>
+<p>WHY PRECOMPUTED: N*(N-1)/2 pairs. For 20 students = 190 pairs. Computed once,</p>
+<p>read many times by the optimizer. Classic performance pattern.</p>
+<br>
+<hr>
+<br>
+<h3>Table: recommendations</h3>
+<p>id                    → primary key</p>
+<p>allocation_session_id → FK to session</p>
+<p>room_number           → "2-Sharing Room 1" (format encodes capacity)</p>
+<p>compatibility_score   → average score of all pairs in this room</p>
+<p>reason                → explanation text</p>
+<br>
+<hr>
+<br>
+<h3>Table: recommendation_members (Junction Table)</h3>
+<p>recommendation_id → FK to recommendations</p>
+<p>student_id        → FK to student</p>
+<p>UNIQUE(recommendation_id, student_id)</p>
+<br>
+<p>WHY SEPARATE: Many-to-many (one room has many students, one student in one room).</p>
+<p>Junction table is the correct relational database pattern.</p>
+<br>
+<hr>
+<br>
+<h2>6. Backend Deep Dive</h2>
+<br>
+<h3>app.py — Entry Point</h3>
+<br>
+<p>When you run: uvicorn app:app --reload</p>
+<li>Python imports app.py</li>
+<li>FastAPI app object is created</li>
+<li>CORS middleware added (allows http://localhost:3000 to call http://localhost:8000)</li>
+<li>All routers (auth, sessions, students, interviews, traits, recommendations) registered</li>
+<li>Three error handlers registered (AppError, RequestValidationError, Exception)</li>
+<br>
+<p>CORS = Cross-Origin Resource Sharing. Without it, browsers block API calls between ports.</p>
+<p>Error handlers return clean JSON like {"detail": "Student not found"} instead of Python tracebacks.</p>
+<br>
+<hr>
+<br>
+<h3>config.py — Settings</h3>
+<br>
+<p>class Settings(BaseSettings):</p>
+<p>    DB_HOST: str = "localhost"</p>
+<p>    DB_PASSWORD: str = ""</p>
+<p>    GEMINI_API_KEY: str = ""</p>
+<p>    JWT_SECRET: str = "change-in-production"</p>
+<br>
+<p>settings = Settings()  # Automatically reads from .env file</p>
+<br>
+<p>WHY: Never hardcode secrets. .env is in .gitignore → teammates each have their own.</p>
+<p>validate_settings() raises RuntimeError on startup if GEMINI_API_KEY is empty.</p>
+<p>FAIL FAST = find problems at startup, not 10 minutes into usage.</p>
+<br>
+<hr>
+<br>
+<h3>database.py — PostgreSQL Connection</h3>
+<br>
+<p>engine = create_engine(</p>
+<p>    settings.DATABASE_URL,</p>
+<p>    pool_pre_ping=True,   # test connection before using it</p>
+<p>    pool_size=10,         # keep 10 persistent connections ready</p>
+<p>    max_overflow=20       # allow 20 extra under heavy load</p>
+<p>)</p>
+<br>
+<p>SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)</p>
+<p>Base = declarative_base()  # all ORM models inherit from this</p>
+<br>
+<p>def get_db():</p>
+<p>    db = SessionLocal()</p>
+<p>    try:</p>
+<p>        yield db          # Python generator: give session to route</p>
+<p>    finally:</p>
+<p>        db.close()        # ALWAYS close, even if exception occurred</p>
+<br>
+<p>HOW FastAPI uses it:</p>
+<p>@router.get("/students/")</p>
+<p>def get_students(db: Session = Depends(get_db)):  ← FastAPI calls get_db() automatically</p>
+<br>
+<p>CONNECTION POOL: Opening a new PostgreSQL connection takes ~50ms. Pool keeps 10 open.</p>
+<p>Requests grab one, use it, return it. Much faster.</p>
+<br>
+<hr>
+<br>
+<h3>models/ — ORM Tables</h3>
+<br>
+<p>ORM = Object Relational Mapper. Python classes map to PostgreSQL tables.</p>
+<br>
+<p>Instead of:</p>
+<p>  SELECT * FROM student WHERE id = 5;</p>
+<br>
+<p>You write:</p>
+<p>  student = db.query(Student).filter(Student.id == 5).first()</p>
+<br>
+<p>Example model (student.py):</p>
+<p>class Student(Base):</p>
+<p>    __tablename__ = "student"</p>
+<p>    id = Column(Integer, primary_key=True)</p>
+<p>    name = Column(String(255), nullable=False)</p>
+<p>    gender = Column(String(10), nullable=False)</p>
+<p>    # RELATIONSHIP: SQLAlchemy auto-fetches linked traits</p>
+<p>    traits = relationship("Traits", back_populates="student", uselist=False)</p>
+<br>
+<p>Usage:</p>
+<p>  student = db.query(Student).first()</p>
+<p>  print(student.traits.sleep_time)  # no extra query needed!</p>
+<br>
+<p>uselist=False = one-to-one (each student has exactly one traits profile)</p>
+<br>
+<hr>
+<br>
+<h3>schemas/ — API Data Shapes (Pydantic)</h3>
+<br>
+<p>Schemas = contracts. Define what data the API accepts (input) and returns (output).</p>
+<br>
+<p>class StudentCreate(BaseModel):</p>
+<p>    name: str</p>
+<p>    email: EmailStr    # Pydantic validates email format automatically</p>
+<p>    gender: str</p>
+<p>    roll_number: str</p>
+<br>
+<p>class StudentResponse(BaseModel):</p>
+<p>    id: int</p>
+<p>    name: str</p>
+<p>    email: str</p>
+<p>    # password is NOT here — we never return passwords!</p>
+<p>    class Config:</p>
+<p>        from_attributes = True  # read from SQLAlchemy model objects</p>
+<br>
+<p>WHY SEPARATE: StudentCreate → what you receive. StudentResponse → what you send back.</p>
+<p>Fine-grained control over API surface.</p>
+<br>
+<hr>
+<br>
+<h3>routes/ — URL Endpoints</h3>
+<br>
+<p>Each file handles one resource. Example pattern:</p>
+<br>
+<p>router = APIRouter(prefix="/students", tags=["Students"])</p>
+<br>
+<p>@router.get("/", response_model=List[StudentResponse])</p>
+<p>def get_students(</p>
+<p>    session_id: int = None,</p>
+<p>    db: Session = Depends(get_db),                   # DB injected</p>
+<p>    current_college = Depends(get_current_college)   # Auth injected</p>
+<p>):</p>
+<p>    """Returns all students for the authenticated college."""</p>
+<p>    ...</p>
+<br>
+<p>HTTP methods: GET=read, POST=create, PUT=update, DELETE=delete</p>
+<p>response_model tells FastAPI to validate and serialize the return value.</p>
+<br>
+<hr>
+<br>
+<h3>services/ — Business Logic</h3>
+<br>
+<p>Sits between routes and database. Contains the actual rules.</p>
+<br>
+<p>ai_service.py example:</p>
+<p>def get_or_create_interview(db, student_id):</p>
+<p>    # Check if interview already exists</p>
+<p>    result = db.execute("SELECT id, conversation FROM interview WHERE student_id=:sid", ...)</p>
+<p>    if result:</p>
+<p>        return existing_data</p>
+<br>
+<p>    # New interview: ask Gemini the first question</p>
+<p>    bot = InterviewBot(system_instruction=get_system_prompt())</p>
+<p>    bot.send_message("Hi, I'm ready")  # Gemini API call</p>
+<p>    history = bot.get_history()</p>
+<p>    db.execute("INSERT INTO interview ...", history_json)</p>
+<p>    db.commit()</p>
+<p>    return new_interview_data</p>
+<br>
+<p>WHY SERVICE LAYER: Routes stay thin. Business logic is in one place. Easy to test.</p>
+<br>
+<hr>
+<br>
+<h3>crud/ — Database Operations</h3>
+<br>
+<p>Lowest level. Pure database calls. No business logic.</p>
+<br>
+<p>def create_session(db: Session, session: AllocationSessionCreate) -&gt; AllocationSession:</p>
+<p>    db_session = AllocationSession(</p>
+<p>        college_id=session.college_id,</p>
+<p>        room_inventory=session.room_inventory or {},</p>
+<p>        session_status="Draft"</p>
+<p>    )</p>
+<p>    db.add(db_session)      # stage for INSERT</p>
+<p>    db.commit()             # write to PostgreSQL</p>
+<p>    db.refresh(db_session)  # reload to get auto-generated id</p>
+<p>    return db_session</p>
+<br>
+<p>CALL CHAIN: Route → Service → CRUD → Database → back up</p>
+<br>
+<hr>
+<br>
+<h3>ai/interview_bot.py — Gemini Chat Wrapper</h3>
+<br>
+<p>class InterviewBot:</p>
+<p>    def __init__(self, system_instruction):</p>
+<p>        self.chat = client.chats.create(</p>
+<p>            model="gemini-2.5-flash",</p>
+<p>            config={"system_instruction": system_instruction}</p>
+<p>        )</p>
+<br>
+<p>    def send_message(self, text):</p>
+<p>        response = self.chat.send_message(text)  # HTTP call to Gemini API</p>
+<p>        return response.text</p>
+<br>
+<p>    def load_history(self, history):</p>
+<p>        # Rebuilds interrupted interview from saved DB data</p>
+<p>        self.chat = client.chats.create(model=..., history=history)</p>
+<br>
+<p>SYSTEM PROMPT tells Gemini:</p>
+<p>  "You are a friendly AI interviewer. In your FIRST message, ask ALL questions:</p>
+<p>   1. Sleep/wake schedule  2. Study habits  3. Social level  4. Preferred room type</p>
+<p>   After student answers, output: INTERVIEW_COMPLETE"</p>
+<br>
+<p>WHY ONE-SHOT: All questions at once = 1 API call instead of many.</p>
+<p>WHY INTERVIEW_COMPLETE TOKEN: Backend detects this string in response → triggers trait extraction.</p>
+<br>
+<hr>
+<br>
+<h3>ai/trait_extractor.py — Structured Trait Extraction</h3>
+<br>
+<p>After interview ends, sends the full conversation to Gemini with a different prompt:</p>
+<p>"Read this transcript. Extract: sleep_time, wake_time, study_style,</p>
+<p> noise_tolerance (0.0-1.0), cleanliness (0.0-1.0), social_level (0.0-1.0),</p>
+<p> preferred_room_size (1/2/3/4), flexible_preferences, non_negotiable_preferences,</p>
+<p> personality_summary. Return ONLY valid JSON."</p>
+<br>
+<p>Result is json.loads()-parsed, numeric fields are clamped (max(0.0, min(1.0, val))),</p>
+<p>then saved to the traits table.</p>
+<br>
+<p>WHY TWO GEMINI CALLS:</p>
+<p>  Interview = chat mode (needs conversation memory)</p>
+<p>  Extraction = generation mode (needs structured JSON precision)</p>
+<p>  Different tasks → different prompting strategies</p>
+<br>
+<hr>
+<br>
+<h3>ml/scorer.py — Compatibility Score 0-100</h3>
+<br>
+<p>def calculate_compatibility(traits1, traits2):</p>
+<p>    score = 100.0  # start perfect</p>
+<br>
+<p>    # Each mismatch deducts points:</p>
+<p>    noise_diff = abs(traits1["noise_tolerance"] - traits2["noise_tolerance"])</p>
+<p>    score -= noise_diff * 20.0   # noise: 20 pts</p>
+<br>
+<p>    clean_diff = abs(traits1["cleanliness"] - traits2["cleanliness"])</p>
+<p>    score -= clean_diff * 20.0   # cleanliness: 20 pts</p>
+<br>
+<p>    social_diff = abs(traits1["social_level"] - traits2["social_level"])</p>
+<p>    score -= social_diff * 10.0  # social: 10 pts</p>
+<br>
+<p>    # Time comparison with normalization (handles "10pm" == "22:00")</p>
+<p>    score -= time_penalty(traits1["sleep_time"], traits2["sleep_time"], max=15.0)</p>
+<p>    score -= time_penalty(traits1["wake_time"], traits2["wake_time"], max=15.0)</p>
+<br>
+<p>    # Study style keyword clustering</p>
+<p>    # "silent" vs "noisy" = full 20pt penalty</p>
+<p>    # Same cluster = 0 penalty</p>
+<p>    score -= study_style_penalty(...)</p>
+<br>
+<p>    return max(0.0, min(100.0, score))  # clamp</p>
+<br>
+<p>WEIGHTS: Noise=20, Cleanliness=20, Study style=20, Sleep=15, Wake=15, Social=10 (total=100)</p>
+<p>TIME NORMALIZATION: "10pm" → 1320 min, "22:00" → 1320 min. Same!</p>
+<p>MIDNIGHT WRAP: min(diff, 1440-diff) ensures 11:30pm vs 12:30am = 60 min, not 1380 min.</p>
+<br>
+<hr>
+<br>
+<h3>ml/allocator.py — OR-Tools CP-SAT Optimization</h3>
+<br>
+<p>def allocate_rooms(db, session_id):</p>
+<p>    # Load: room_inventory {"2":20,"3":10}, students with traits, compatibility scores</p>
+<p>    # Group students by (preferred_room_size, gender)</p>
+<p>    # e.g. group ("2","Male") = all males who want double rooms</p>
+<br>
+<p>    for (room_size, gender), group in groups.items():</p>
+<p>        assignments = _run_ortools(group, room_size, available_rooms, scores)</p>
+<p>        # Save to recommendations + recommendation_members tables</p>
+<br>
+<p>Inside _run_ortools (the CP-SAT solver):</p>
+<p>    model = cp_model.CpModel()</p>
+<br>
+<p>    # VARIABLES: x[student][room] = 1 if student is in that room, else 0</p>
+<p>    x = {(s,r): model.NewBoolVar() for s in students for r in rooms}</p>
+<br>
+<p>    # CONSTRAINT 1: Each student in exactly ONE room</p>
+<p>    for s: model.AddExactlyOne([x[(s,r)] for r in rooms])</p>
+<br>
+<p>    # CONSTRAINT 2: No room over capacity</p>
+<p>    for r: model.Add(sum(x[(s,r)] for s) &lt;= capacity)</p>
+<br>
+<p>    # OBJECTIVE: Maximize total pairwise compatibility</p>
+<p>    # both_in_r = 1 ONLY IF both students i and j are in same room r</p>
+<p>    model.Maximize(sum(score[i][j] * both_in_r for all pairs))</p>
+<br>
+<p>    solver.Solve(model)  # OR-Tools finds the global optimum</p>
+<br>
+<p>CONSTRAINT PROGRAMMING: You define constraints + objective. Solver finds optimal solution.</p>
+<p>You don't write the search algorithm — OR-Tools does it.</p>
+<p>HARD CONSTRAINTS happen BEFORE the solver: gender groups + room size groups.</p>
+<br>
+<hr>
+<br>
+<h2>7. Frontend Deep Dive</h2>
+<br>
+<h3>App.js — Routing</h3>
+<br>
+<p>&lt;Router&gt;</p>
+<p>  &lt;Routes&gt;</p>
+<p>    &lt;Route path="/"          element={&lt;Landing /&gt;} /&gt;      // public</p>
+<p>    &lt;Route path="/login"     element={&lt;Login /&gt;} /&gt;        // public</p>
+<p>    &lt;Route path="/dashboard" element={&lt;Protected&gt;&lt;Dashboard /&gt;&lt;/Protected&gt;} /&gt;</p>
+<p>    &lt;Route path="/recommendations/room/:id" element={&lt;Protected&gt;&lt;RoomDetails /&gt;&lt;/Protected&gt;} /&gt;</p>
+<p>    // ...</p>
+<p>  &lt;/Routes&gt;</p>
+<p>&lt;/Router&gt;</p>
+<br>
+<p>ProtectedRoute: checks localStorage.getItem("token"). If missing → redirect to /login.</p>
+<br>
+<hr>
+<br>
+<h3>api/apiClient.js — HTTP Client with Interceptors</h3>
+<br>
+<p>const apiClient = axios.create({ baseURL: "http://localhost:8000" });</p>
+<br>
+<p>// REQUEST INTERCEPTOR: automatically adds JWT to every request</p>
+<p>apiClient.interceptors.request.use(config =&gt; {</p>
+<p>    const token = localStorage.getItem("token");</p>
+<p>    if (token) config.headers.Authorization = <code>Bearer ${token}</code>;</p>
+<p>    return config;</p>
+<p>});</p>
+<br>
+<p>// RESPONSE INTERCEPTOR: if 401 → clear token → redirect to login</p>
+<p>apiClient.interceptors.response.use(</p>
+<p>    response =&gt; response,</p>
+<p>    error =&gt; {</p>
+<p>        if (error.response?.status === 401) {</p>
+<p>            localStorage.removeItem("token");</p>
+<p>            window.location.href = "/login";</p>
+<p>        }</p>
+<p>        return Promise.reject(error.response?.data);</p>
+<p>    }</p>
+<p>);</p>
+<br>
+<p>INTERCEPTORS = middleware for HTTP calls. Write JWT logic once, not in every API file.</p>
+<br>
+<p>Individual API files are just thin wrappers:</p>
+<p>const studentApi = {</p>
+<p>    getStudents: async (sessionId) =&gt; {</p>
+<p>        const res = await apiClient.get(<code>/students?session_id=${sessionId}</code>);</p>
+<p>        return res.data;</p>
+<p>    }</p>
+<p>};</p>
+<br>
+<hr>
+<br>
+<h3>contexts/ThemeContext.jsx — Dark/Light Mode</h3>
+<br>
+<p>export function ThemeProvider({ children }) {</p>
+<p>    const [isDark, setIsDark] = useState(localStorage.getItem("theme") === "dark");</p>
+<br>
+<p>    useEffect(() =&gt; {</p>
+<p>        document.documentElement.classList.toggle("dark", isDark);  // Tailwind dark mode</p>
+<p>        localStorage.setItem("theme", isDark ? "dark" : "light");   // persist</p>
+<p>    }, [isDark]);</p>
+<br>
+<p>    return &lt;ThemeContext.Provider value={{ isDark, toggleTheme }}&gt;{children}&lt;/ThemeContext.Provider&gt;;</p>
+<p>}</p>
+<br>
+<p>REACT CONTEXT: shares state without prop-drilling. Any component: useContext(ThemeContext).</p>
+<p>Tailwind's dark: prefix activates when &lt;html&gt; has class="dark".</p>
+<br>
+<hr>
+<br>
+<h3>layouts/PageLayout.jsx</h3>
+<br>
+<p>&lt;div className="min-h-screen flex flex-col"&gt;</p>
+<p>    &lt;Navbar /&gt;       // top bar</p>
+<p>    &lt;div className="flex flex-1"&gt;</p>
+<p>        &lt;Sidebar /&gt;  // left navigation</p>
+<p>        &lt;main className="flex-1 p-8 overflow-y-auto"&gt;</p>
+<p>            {children}  // page content</p>
+<p>        &lt;/main&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p>&lt;/div&gt;</p>
+<br>
+<p>Sidebar uses NavLink which auto-applies isActive class on current route.</p>
+<br>
+<hr>
+<br>
+<h2>8. Pages Explained</h2>
+<br>
+<h3>Landing.jsx (/)</h3>
+<p>Public marketing page. Hero + feature cards + "Get Started" button. No API calls.</p>
+<br>
+<h3>login.jsx (/login)</h3>
+<p>Login tab + Register tab. On login:</p>
+<p>  const data = await authApi.login(email, password);</p>
+<p>  localStorage.setItem("token", data.access_token);</p>
+<p>  navigate("/dashboard");</p>
+<p>All future requests include this token automatically via the interceptor.</p>
+<br>
+<h3>Dashboard.jsx (/dashboard)</h3>
+<p>4 stat cards:</p>
+<p>  Total Sessions, Hostel Capacity, Enrolled Students, Vacancy Seats</p>
+<br>
+<p>Bed capacity calculation:</p>
+<p>  {"2": 20, "3": 10} → Object.entries().reduce((sum, [cap, count]) =&gt; sum + cap*count, 0)</p>
+<p>  = (2×20) + (3×10) = 70 beds</p>
+<br>
+<h3>SessionList.jsx (/sessions)</h3>
+<p>Table of sessions. "Set Active" stores session ID in localStorage → used by Interview + Recommendations.</p>
+<br>
+<h3>StudentList.jsx (/students)</h3>
+<p>Search + sort table. Client-side filtering = instant (no API call on each keystroke).</p>
+<br>
+<h3>Interview.jsx (/interview) ← KEY PAGE</h3>
+<br>
+<p>Two-panel layout:</p>
+<p>  Left: student list (click to start interview)</p>
+<p>  Right: chat window (like WhatsApp)</p>
+<br>
+<p>startInterview(studentId):</p>
+<p>  setSelectedStudentId(studentId)  // NUMBER not string! (fixed bug)</p>
+<p>  setChatHistory([{sender:"bot", isTyping:true}])  // show typing...</p>
+<p>  const data = await interviewApi.startInterview(studentId)</p>
+<p>  setChatHistory(data.history.map(msg =&gt; ({sender: msg.role==="user"?"user":"bot", text:msg.text})))</p>
+<br>
+<p>handleSendMessage():</p>
+<p>  // OPTIMISTIC UI: show message immediately before API responds (feels fast)</p>
+<p>  setChatHistory(prev =&gt; [...prev, {sender:"user", text:msg}, {sender:"bot", isTyping:true}])</p>
+<p>  const data = await interviewApi.sendMessage(selectedStudentId, msg)</p>
+<p>  setChatHistory(data.history.map(...))</p>
+<p>  if (data.is_complete) {</p>
+<p>      await interviewApi.endInterview(selectedStudentId)  // triggers trait extraction</p>
+<p>  }</p>
+<br>
+<p>BUG FIXED: selectedStudentId was "" (string) compared === to s.id (number). 5 === "" = false!</p>
+<p>Fixed: initialize as null, always use numeric value.</p>
+<br>
+<h3>Recommendations.jsx (/recommendations) ← KEY PAGE</h3>
+<br>
+<p>Grid of room cards. Generates if none exist.</p>
+<p>Each card: room number, room type badge, compatibility score, avatar overlaps, "View Details" button.</p>
+<br>
+<p>getRoomType(roomNumber, memberCount):</p>
+<p>  const match = roomNumber.match(/^(\d+)/)  // "2-Sharing Room 1" → ["2", "2"]</p>
+<p>  const capacity = parseInt(match[1])        // 2</p>
+<p>  return {1:"Single", 2:"Double", 3:"Triple", 4:"Quad"}[capacity]  // "Double"</p>
+<br>
+<p>WHY NOT members.length: A Double room might have 1 student (odd numbers).</p>
+<p>Room TYPE = capacity from room_number. Not current occupancy.</p>
+<br>
+<h3>RoomDetails.jsx (/recommendations/room/:id) ← KEY PAGE</h3>
+<br>
+<p>Full detail view. Data passed via React Router state:</p>
+<p>  navigate(<code>/recommendations/room/${rec.id}</code>, { state: { recommendation: rec } })</p>
+<p>  const { recommendation: rec } = location.state  // no extra API call!</p>
+<br>
+<p>Shows: gradient header, room number + type + score, AI reasoning, member list.</p>
+<br>
+<hr>
+<br>
+<h2>9. Key Concepts Explained Simply</h2>
+<br>
+<h3>JWT Authentication</h3>
+<p>Token = Base64({"sub":"admin@iit.edu","exp":...}) + cryptographic signature</p>
+<p>Server verifies signature with JWT_SECRET → no database lookup needed.</p>
+<p>Token stored in localStorage → sent in every request header: Authorization: Bearer &lt;token&gt;</p>
+<br>
+<h3>React useState</h3>
+<p>const [students, setStudents] = useState([])</p>
+<p>  students = current value (starts empty)</p>
+<p>  setStudents(newList) = update value + trigger re-render</p>
+<br>
+<h3>React useEffect</h3>
+<p>useEffect(() =&gt; {</p>
+<p>    fetchStudents()         // run this...</p>
+<p>}, [activeSessionId])       // ...when this changes</p>
+<p>Empty [] = run once on mount.</p>
+<br>
+<h3>Async/Await</h3>
+<p>const data = await studentApi.getStudents()</p>
+<p>// "await" pauses until HTTP response arrives. Much cleaner than .then() callbacks.</p>
+<p>// Errors caught with try/catch.</p>
+<br>
+<h3>SQLAlchemy Relationships</h3>
+<p>traits = relationship("Traits", back_populates="student", uselist=False)</p>
+<p>student = db.query(Student).first()</p>
+<p>print(student.traits.sleep_time)  // SQLAlchemy does the JOIN automatically</p>
+<br>
+<hr>
+<br>
+<h2>10. The AI Pipeline</h2>
+<br>
+<p>STEP 1: INTERVIEW</p>
+<p>  Model: gemini-2.5-flash (chat mode)</p>
+<p>  Input: System prompt + student responses</p>
+<p>  Output: Questions + INTERVIEW_COMPLETE signal</p>
+<br>
+<p>STEP 2: TRAIT EXTRACTION</p>
+<p>  Model: gemini-2.5-flash (generation mode)</p>
+<p>  Input: Full transcript + extraction prompt</p>
+<p>  Output: JSON with 10 trait fields</p>
+<br>
+<p>STEP 3: VALIDATION (Python)</p>
+<p>  json.loads() → parse JSON</p>
+<p>  Clamp floats: max(0.0, min(1.0, val))</p>
+<p>  Clamp room_size: max(1, min(4, val))</p>
+<p>  Save to traits table</p>
+<br>
+<hr>
+<br>
+<h2>11. Scoring Algorithm — Worked Example</h2>
+<br>
+<p>Student A: noise=0.8, clean=0.9, social=0.3, sleep="23:00", wake="07:00", study="silent"</p>
+<p>Student B: noise=0.7, clean=0.8, social=0.4, sleep="23:30", wake="07:30", study="quiet"</p>
+<br>
+<p>Start: score = 100.0</p>
+<br>
+<p>Noise:   |0.8 - 0.7| = 0.1 × 20 = 2.0    → 98.0</p>
+<p>Clean:   |0.9 - 0.8| = 0.1 × 20 = 2.0    → 96.0</p>
+<p>Social:  |0.3 - 0.4| = 0.1 × 10 = 1.0    → 95.0</p>
+<p>Sleep:   |1380-1410| = 30min → 30/180=0.167 → 0.167×15=2.5  → 92.5</p>
+<p>Wake:    |420-450|   = 30min → 2.5                          → 90.0</p>
+<p>Study:   both "silent" cluster → 0 penalty                  → 90.0</p>
+<br>
+<p>RESULT: 90.0% compatibility (great match!)</p>
+<br>
+<hr>
+<br>
+<h2>12. Optimization Algorithm — Worked Example</h2>
+<br>
+<p>4 students, 2 double rooms, all same gender:</p>
+<p>  Alice-Bob=90, Alice-Carol=60, Alice-Dave=70, Bob-Carol=80, Bob-Dave=50, Carol-Dave=85</p>
+<br>
+<p>Possible assignments:</p>
+<p>  Option 1: {Alice,Bob} + {Carol,Dave} → 90+85=175   ← OR-Tools picks this!</p>
+<p>  Option 2: {Alice,Carol} + {Bob,Dave} → 60+50=110</p>
+<p>  Option 3: {Alice,Dave} + {Bob,Carol} → 70+80=150</p>
+<br>
+<p>OR-Tools guarantees the GLOBAL OPTIMUM (175), not just a locally good result.</p>
+<p>Greedy algorithms can get stuck (e.g. pick Alice-Bob=90, then be stuck with 50+70=120).</p>
+<br>
+<p>Hard constraints (before solver runs):</p>
+<p>  1. preferred_room_size: student groups separate by desired room size</p>
+<p>  2. gender: males and females never in the same group</p>
+<br>
+<hr>
+<br>
+<h2>Summary Architecture</h2>
+<br>
+<p>FRONTEND (React)</p>
+<p>  Landing | Login | Dashboard | Sessions | Students | Interview | Recommendations | RoomDetails</p>
+<p>  ↕ Axios HTTP with JWT interceptor</p>
+<p>BACKEND (FastAPI Python)</p>
+<p>  Routes → Services → CRUD → SQLAlchemy ORM</p>
+<p>    ├─ AI Module → Google Gemini API (external)</p>
+<p>    └─ ML Module → OR-Tools CP-SAT (runs locally in Python)</p>
+<p>  ↕ SQLAlchemy</p>
+<p>DATABASE (PostgreSQL)</p>
+<p>  college → allocation_sessions → student → interview → traits</p>
+<p>  → compatibility_score → recommendations → recommendation_members</p>
+<br>
+<hr>
+<br>
+<h2>Technologies You Have Mastered</h2>
+<br>
+<p>React 18, React Router v6, Axios + interceptors, Tailwind CSS, Lucide Icons</p>
+<p>useState, useEffect, useContext, React Context API, localStorage</p>
+<p>FastAPI, Python, Pydantic, SQLAlchemy ORM, PostgreSQL, JSONB</p>
+<p>JWT Authentication, bcrypt password hashing, CORS middleware</p>
+<p>Google Gemini API, system prompts, chat history, JSON extraction</p>
+<p>Google OR-Tools CP-SAT, constraint programming, Boolean variables, objective functions</p>
+<p>REST API design (Routes/Services/CRUD layers), Dependency Injection</p>
+<p>.env secrets management, connection pooling, error handling</p>
+<br>
+<p>This document covers 100% of CoHabit-AI as of July 2026.</p>
+<p>Every file has a purpose. Every line has a reason.</p>
+<br>
+</div></body></html>
