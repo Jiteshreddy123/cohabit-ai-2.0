@@ -1,5 +1,6 @@
 import json
 from database import SessionLocal
+from models.college import College
 from models.student import Student
 from models.traits import Traits
 from models.interview import Interview
@@ -11,8 +12,25 @@ from ml.allocator import allocate_rooms
 def seed_demo_students_and_interviews():
     db = SessionLocal()
     try:
-        # College ID 4 is our Demo Admin college
-        college_id = 4
+        # Ensure Demo Admin college exists
+        college = db.query(College).filter(College.email == "admin@cohabit.demo").first()
+        if not college:
+            college = College(
+                name="Demo University",
+                email="admin@cohabit.demo",
+                password=hash_password("Admin@1234"),
+                college_code="A8FC026B"
+            )
+            db.add(college)
+            db.commit()
+            db.refresh(college)
+            print(f"Created demo college: {college.name} (ID: {college.id})")
+        else:
+            college.college_code = "A8FC026B"
+            db.commit()
+
+        college_id = college.id
+
         session = db.query(AllocationSession).filter(AllocationSession.college_id == college_id).first()
         if not session:
             print("No allocation session found! Creating one...")
