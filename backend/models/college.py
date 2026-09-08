@@ -17,6 +17,12 @@ class College(Base):
     reset_token = Column(String(255), unique=True, nullable=True, index=True)
     reset_token_expiry = Column(DateTime(timezone=True), nullable=True)
 
+    location = Column(String(255), nullable=True, default="Main Campus")
+    city = Column(String(100), nullable=True, default="Bengaluru")
+    state = Column(String(100), nullable=True, default="Karnataka")
+    description = Column(String(1000), nullable=True, default="Premier institution offering modern campus and residential living facilities.")
+    image_url = Column(String(500), nullable=True)
+
     # ── Relationships ─────────────────────────────────────────
     allocation_sessions = relationship(
         "AllocationSession", back_populates="college", lazy="select"

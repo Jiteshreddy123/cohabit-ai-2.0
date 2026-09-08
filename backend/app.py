@@ -1,7 +1,9 @@
+import os
 import logging
 from fastapi import FastAPI, Request, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 
 from config import settings, validate_settings
@@ -10,6 +12,7 @@ from routes import (
     health_router, auth_router, session_router, student_router,
     interview_router, trait_router, recommendation_router,
     marketplace_router, microgig_router, chat_router,
+    review_router, complaint_router, management_router, discover_router,
 )
 from utils.exceptions import AppError
 
@@ -31,8 +34,8 @@ except RuntimeError as e:
 # ── App Initialization ────────────────────────────────────────
 app = FastAPI(
     title="CoHabit-AI API",
-    description="Backend API for CoHabit-AI student roommate allocation system.",
-    version="1.0.0",
+    description="Backend API for CoHabit-AI student roommate allocation, verified reviews, complaints & discovery system.",
+    version="2.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
@@ -91,8 +94,6 @@ def general_exception_handler(request: Request, exc: Exception):
     )
 
 # ── Include Routers ───────────────────────────────────────────
-# Mounted without prefixes to match requested Day 2 endpoints exactly:
-# GET /health, POST /login, GET /allocation-sessions, etc.
 app.include_router(health_router)
 app.include_router(auth_router)
 app.include_router(session_router)
@@ -103,10 +104,15 @@ app.include_router(recommendation_router)
 app.include_router(marketplace_router)
 app.include_router(microgig_router)
 app.include_router(chat_router)
+app.include_router(review_router)
+app.include_router(complaint_router)
+app.include_router(management_router)
+app.include_router(discover_router)
 
-import os
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+# ── Uploads Static Directory ──────────────────────────────────
+uploads_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
+os.makedirs(uploads_dir, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
 
 # ── Serve React Frontend ────────────────────────────────────────
 

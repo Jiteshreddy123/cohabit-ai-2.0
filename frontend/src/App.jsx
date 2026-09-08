@@ -1,8 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import PageLayout from "./layouts/PageLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+
 import Dashboard from "./pages/Dashboard";
 import StudentList from "./pages/StudentList";
 import StudentForm from "./pages/StudentForm";
@@ -22,11 +23,18 @@ import Marketplace from "./pages/Marketplace";
 import MicroGigs from "./pages/MicroGigs";
 import Chat from "./pages/Chat";
 
+// New Integrated Features
+import Discover from "./pages/Discover";
+import HostelDetail from "./pages/HostelDetail";
+import Reviews from "./pages/Reviews";
+import MyComplaints from "./pages/MyComplaints";
+import ManagementComplaints from "./pages/ManagementComplaints";
+import PublicIssues from "./pages/PublicIssues";
+
 import StudentLogin from "./pages/StudentLogin";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import { authApi } from "./api/authApi";
-import { Navigate } from "react-router-dom";
 
 // Helper: wraps a page in both PageLayout and ProtectedRoute
 const AdminRoute = ({ children }) => {
@@ -76,6 +84,19 @@ function App() {
           {/* ── Protected Routes ───────────────────────────────── */}
           <Route path="/dashboard" element={<SharedRoute><Dashboard /></SharedRoute>} />
 
+          {/* ── Feature 1: Verified Student Reviews ───────────── */}
+          <Route path="/reviews" element={<SharedRoute><Reviews /></SharedRoute>} />
+
+          {/* ── Feature 2: Student Complaints & Management ─────── */}
+          <Route path="/complaints" element={<StudentRoute><MyComplaints /></StudentRoute>} />
+          <Route path="/public-issues" element={<SharedRoute><PublicIssues /></SharedRoute>} />
+          <Route path="/management/complaints" element={<AdminRoute><ManagementComplaints /></AdminRoute>} />
+
+          {/* ── Feature 3: College & Hostel Discovery ─────────── */}
+          <Route path="/discover" element={<SharedRoute><Discover /></SharedRoute>} />
+          <Route path="/discover/hostel/:id" element={<SharedRoute><HostelDetail /></SharedRoute>} />
+
+          {/* ── Admin Allocation Management ───────────────────── */}
           <Route path="/sessions" element={<AdminRoute><SessionList /></AdminRoute>} />
           <Route path="/sessions/new" element={<AdminRoute><SessionForm /></AdminRoute>} />
           <Route path="/sessions/:id/structure" element={<AdminRoute><SessionStructure /></AdminRoute>} />
@@ -85,19 +106,17 @@ function App() {
           <Route path="/students/:id" element={<AdminRoute><StudentDetails /></AdminRoute>} />
           <Route path="/students/:id/edit" element={<AdminRoute><StudentForm isEditing /></AdminRoute>} />
 
+          <Route path="/recommendations" element={<AdminRoute><Recommendations /></AdminRoute>} />
+          <Route path="/recommendations/room/:id" element={<AdminRoute><RoomDetails /></AdminRoute>} />
+          <Route path="/profile" element={<AdminRoute><Profile /></AdminRoute>} />
+
+          {/* ── Student Engagement & Personality AI ────────────── */}
           <Route path="/interview" element={<StudentRoute><Interview /></StudentRoute>} />
           <Route path="/interview/:id" element={<AdminRoute><InterviewDetails /></AdminRoute>} />
-
-          {/* ── Student Engagement Features ─────────────────── */}
           <Route path="/marketplace" element={<StudentRoute><Marketplace /></StudentRoute>} />
           <Route path="/micro-gigs" element={<StudentRoute><MicroGigs /></StudentRoute>} />
           <Route path="/chat" element={<StudentRoute><Chat /></StudentRoute>} />
           <Route path="/chat/:convId" element={<StudentRoute><Chat /></StudentRoute>} />
-
-          <Route path="/recommendations" element={<AdminRoute><Recommendations /></AdminRoute>} />
-          <Route path="/recommendations/room/:id" element={<AdminRoute><RoomDetails /></AdminRoute>} />
-
-          <Route path="/profile" element={<AdminRoute><Profile /></AdminRoute>} />
 
           {/* ── 404 ────────────────────────────────────────────── */}
           <Route path="*" element={<NotFound />} />

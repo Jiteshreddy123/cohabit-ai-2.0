@@ -169,38 +169,49 @@ function Dashboard() {
       </div>
 
       {/* Action shortcuts */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
         <Link
-          to="/sessions/new"
-          className="p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl hover:border-brand-500 hover:shadow-md transition-all group"
+          to="/management/complaints"
+          className="p-5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl hover:border-red-500 hover:shadow-md transition-all group"
         >
-          <div className="p-3 bg-brand-50 dark:bg-brand-500/10 rounded-lg w-fit group-hover:bg-brand-500 group-hover:text-white transition-colors text-brand-600 dark:text-brand-400">
-            <Layers size={20} />
+          <div className="p-3 bg-red-50 dark:bg-red-500/10 rounded-xl w-fit group-hover:bg-red-500 group-hover:text-white transition-colors text-red-600 dark:text-red-400">
+            <AlertCircle size={20} />
           </div>
-          <h3 className="font-semibold text-gray-900 dark:text-white mt-4 text-base">Create Allocation Session</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Configure room quotas and begin gathering student preferences.</p>
+          <h3 className="font-bold text-gray-900 dark:text-white mt-3 text-sm">Complaints Desk</h3>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Review, assign, and update student repair work orders.</p>
         </Link>
 
         <Link
-          to="/students/new"
-          className="p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl hover:border-blue-500 hover:shadow-md transition-all group"
+          to="/reviews"
+          className="p-5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl hover:border-amber-500 hover:shadow-md transition-all group"
         >
-          <div className="p-3 bg-blue-50 dark:bg-blue-500/10 rounded-lg w-fit group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600 dark:text-blue-400">
-            <Users size={20} />
+          <div className="p-3 bg-amber-50 dark:bg-amber-500/10 rounded-xl w-fit group-hover:bg-amber-500 group-hover:text-white transition-colors text-amber-600 dark:text-amber-400">
+            <TrendingUp size={20} />
           </div>
-          <h3 className="font-semibold text-gray-900 dark:text-white mt-4 text-base">Enroll Students</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Add student records or upload batches to active allocation cohorts.</p>
+          <h3 className="font-bold text-gray-900 dark:text-white mt-3 text-sm">Verified Reviews</h3>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Inspect authentic student feedback and facility ratings.</p>
+        </Link>
+
+        <Link
+          to="/sessions/new"
+          className="p-5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl hover:border-brand-500 hover:shadow-md transition-all group"
+        >
+          <div className="p-3 bg-brand-50 dark:bg-brand-500/10 rounded-xl w-fit group-hover:bg-brand-500 group-hover:text-white transition-colors text-brand-600 dark:text-brand-400">
+            <Layers size={20} />
+          </div>
+          <h3 className="font-bold text-gray-900 dark:text-white mt-3 text-sm">Allocation Sessions</h3>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Configure room quotas and student cohorts.</p>
         </Link>
 
         <Link
           to="/recommendations"
-          className="p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl hover:border-purple-500 hover:shadow-md transition-all group"
+          className="p-5 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl hover:border-purple-500 hover:shadow-md transition-all group"
         >
-          <div className="p-3 bg-purple-50 dark:bg-purple-500/10 rounded-lg w-fit group-hover:bg-purple-500 group-hover:text-white transition-colors text-purple-600 dark:text-purple-400">
+          <div className="p-3 bg-purple-50 dark:bg-purple-500/10 rounded-xl w-fit group-hover:bg-purple-500 group-hover:text-white transition-colors text-purple-600 dark:text-purple-400">
             <Lightbulb size={20} />
           </div>
-          <h3 className="font-semibold text-gray-900 dark:text-white mt-4 text-base">Run AI Allocation</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Compute compatibility metrics and generate optimal room assignments.</p>
+          <h3 className="font-bold text-gray-900 dark:text-white mt-3 text-sm">Run AI Allocation</h3>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Generate optimal compatibility room assignments.</p>
         </Link>
       </div>
     </div>
