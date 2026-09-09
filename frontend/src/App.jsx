@@ -26,6 +26,7 @@ import Chat from "./pages/Chat";
 // New Integrated Features
 import Discover from "./pages/Discover";
 import HostelDetail from "./pages/HostelDetail";
+import CollegeHostels from "./pages/CollegeHostels";
 import Reviews from "./pages/Reviews";
 import MyComplaints from "./pages/MyComplaints";
 import ManagementComplaints from "./pages/ManagementComplaints";
@@ -69,17 +70,53 @@ const SharedRoute = ({ children }) => {
   );
 };
 
+const DiscoverRoute = ({ children }) => {
+  if (authApi.isAuthenticated()) {
+    return (
+      <ProtectedRoute>
+        <PageLayout>{children}</PageLayout>
+      </ProtectedRoute>
+    );
+  }
+  return (
+    <div className="min-h-screen bg-gray-950 text-gray-50 flex flex-col font-sans">
+      <nav className="flex items-center justify-between px-6 py-4 border-b border-gray-800/80 bg-gray-950/90 backdrop-blur-md sticky top-0 z-50">
+        <a href="/" className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-teal-400 flex items-center justify-center shadow-lg shadow-brand-500/20">
+            <span className="text-gray-950 font-black text-sm">CH</span>
+          </div>
+          <span className="font-bold text-xl tracking-tight text-white">Cohabit<span className="text-brand-400">AI</span></span>
+        </a>
+        <div className="flex items-center gap-4">
+          <a href="/" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">← Back to Home</a>
+          <a href="/login" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">Admin Login</a>
+          <a href="/student-login" className="text-sm font-medium bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-lg transition-all shadow-[0_0_15px_rgba(20,184,166,0.3)]">Student Portal</a>
+        </div>
+      </nav>
+      <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
+        {children}
+      </main>
+    </div>
+  );
+};
+
 function App() {
   return (
     <ThemeProvider>
       <Router>
         <Routes>
           {/* ── Public Routes ──────────────────────────────────── */}
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/login" element={authApi.isAuthenticated() ? <Navigate to="/dashboard" replace /> : <Login />} />
           <Route path="/student-login" element={authApi.isAuthenticated() ? <Navigate to="/dashboard" replace /> : <StudentLogin />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+
+          {/* ── Feature 3: College & Hostel Discovery ─────────── */}
+          <Route path="/discover" element={<DiscoverRoute><Discover /></DiscoverRoute>} />
+          <Route path="/colleges/:id/hostels" element={<DiscoverRoute><CollegeHostels /></DiscoverRoute>} />
+          <Route path="/discover/college/:id" element={<DiscoverRoute><CollegeHostels /></DiscoverRoute>} />
+          <Route path="/discover/hostel/:id" element={<DiscoverRoute><HostelDetail /></DiscoverRoute>} />
 
           {/* ── Protected Routes ───────────────────────────────── */}
           <Route path="/dashboard" element={<SharedRoute><Dashboard /></SharedRoute>} />
@@ -91,10 +128,6 @@ function App() {
           <Route path="/complaints" element={<StudentRoute><MyComplaints /></StudentRoute>} />
           <Route path="/public-issues" element={<SharedRoute><PublicIssues /></SharedRoute>} />
           <Route path="/management/complaints" element={<AdminRoute><ManagementComplaints /></AdminRoute>} />
-
-          {/* ── Feature 3: College & Hostel Discovery ─────────── */}
-          <Route path="/discover" element={<SharedRoute><Discover /></SharedRoute>} />
-          <Route path="/discover/hostel/:id" element={<SharedRoute><HostelDetail /></SharedRoute>} />
 
           {/* ── Admin Allocation Management ───────────────────── */}
           <Route path="/sessions" element={<AdminRoute><SessionList /></AdminRoute>} />

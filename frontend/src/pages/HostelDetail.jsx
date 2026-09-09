@@ -126,13 +126,31 @@ export default function HostelDetail() {
 
   return (
     <div className="space-y-8">
-      {/* Back Link */}
-      <Link
-        to="/discover"
-        className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-brand-600 transition-colors"
-      >
-        <ArrowLeft size={14} /> Back to Discover Directory
-      </Link>
+      {/* Back Link & Breadcrumb */}
+      <div className="flex items-center justify-between">
+        <Link
+          to={hostel.college_id ? `/colleges/${hostel.college_id}/hostels` : "/"}
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-500 hover:text-brand-600 dark:hover:text-brand-400 transition-colors bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 px-3.5 py-2 rounded-xl"
+        >
+          <ArrowLeft size={15} /> Back to {hostel.college_name || "Campus Hostels"}
+        </Link>
+
+        <div className="flex items-center gap-1.5 text-xs text-gray-400">
+          <Link to="/" className="hover:text-brand-400">Home</Link>
+          <ChevronRight size={12} className="text-gray-600" />
+          {hostel.college_id && (
+            <>
+              <Link to={`/colleges/${hostel.college_id}/hostels`} className="hover:text-brand-400">
+                {hostel.college_name}
+              </Link>
+              <ChevronRight size={12} className="text-gray-600" />
+            </>
+          )}
+          <span className="text-brand-400 font-medium truncate max-w-[150px] sm:max-w-none">
+            {hostel.name}
+          </span>
+        </div>
+      </div>
 
       {/* Hero Overview Banner */}
       <div className="bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">

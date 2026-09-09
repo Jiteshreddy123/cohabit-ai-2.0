@@ -115,7 +115,8 @@ def accept_gig(
         raise ValidationError("You cannot accept your own gig")
     if gig.status != "open":
         raise ValidationError("This gig is no longer available")
-    if gig.expires_at < now:
+    expires = gig.expires_at.replace(tzinfo=timezone.utc) if (gig.expires_at and gig.expires_at.tzinfo is None) else gig.expires_at
+    if expires and expires < now:
         raise ValidationError("This gig has expired")
     gig.status = "accepted"
     gig.accepted_by = current_student.id

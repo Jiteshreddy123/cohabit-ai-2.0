@@ -16,17 +16,18 @@ def seed_demo_students_and_interviews():
         college = db.query(College).filter(College.email == "admin@cohabit.demo").first()
         if not college:
             college = College(
-                name="Demo University",
+                name="ACE Engineering College",
                 email="admin@cohabit.demo",
                 password=hash_password("Admin@1234"),
-                college_code="A8FC026B"
+                college_code="ACE2026"
             )
             db.add(college)
             db.commit()
             db.refresh(college)
             print(f"Created demo college: {college.name} (ID: {college.id})")
         else:
-            college.college_code = "A8FC026B"
+            college.name = "ACE Engineering College"
+            college.college_code = "ACE2026"
             db.commit()
 
         college_id = college.id

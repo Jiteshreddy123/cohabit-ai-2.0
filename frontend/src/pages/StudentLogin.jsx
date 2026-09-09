@@ -157,7 +157,7 @@ const StudentLogin = () => {
               <button
                 type="button"
                 onClick={async () => {
-                  await authApi.studentLogin("A8FC026B", "aarav@cohabit.demo", "CS21B001");
+                  await authApi.studentLogin("ACE2026", "aarav@cohabit.demo", "CS21B001");
                   navigate("/dashboard");
                   window.location.reload();
                 }}

@@ -24,50 +24,90 @@ def seed_discovery_and_complaint_data():
         college = db.query(College).filter(College.email == "admin@cohabit.demo").first()
         if not college:
             college = College(
-                name="Demo University",
+                name="ACE Engineering College",
                 email="admin@cohabit.demo",
                 password=hash_password("Admin@1234"),
-                college_code="A8FC026B",
-                location="Tech Innovation Hub Campus, Electronic City",
-                city="Bengaluru",
-                state="Karnataka",
-                description="Leading autonomous institute recognized for academic excellence, state-of-the-art campus infrastructure, and AI-powered residential accommodations.",
-                image_url="https://images.unsplash.com/photo-1562774053-701939374585?w=800&auto=format&fit=crop&q=80"
+                college_code="ACE2026",
+                location="Ankushapur, Ghatkesar",
+                city="Hyderabad",
+                state="Telangana",
+                description="Premier autonomous engineering institute affiliated with JNTUH and accredited NAAC A+, featuring advanced tech labs, high-speed optical fiber, and modern residential campuses.",
+                image_url="https://dfhe5ze0n4pxu.cloudfront.net/College/Image/Image-1766845804828.jpeg"
             )
             db.add(college)
             db.commit()
             db.refresh(college)
         else:
-            college.location = "Tech Innovation Hub Campus, Electronic City"
-            college.city = "Bengaluru"
-            college.state = "Karnataka"
-            college.description = "Leading autonomous institute recognized for academic excellence, state-of-the-art campus infrastructure, and AI-powered residential accommodations."
-            college.image_url = "https://images.unsplash.com/photo-1562774053-701939374585?w=800&auto=format&fit=crop&q=80"
+            college.name = "ACE Engineering College"
+            college.college_code = "ACE2026"
+            college.location = "Ankushapur, Ghatkesar"
+            college.city = "Hyderabad"
+            college.state = "Telangana"
+            college.description = "Premier autonomous engineering institute affiliated with JNTUH and accredited NAAC A+, featuring advanced tech labs, high-speed optical fiber, and modern residential campuses."
+            college.image_url = "https://dfhe5ze0n4pxu.cloudfront.net/College/Image/Image-1766845804828.jpeg"
             db.commit()
 
-        # College 2 for multi-college discovery
-        col2 = db.query(College).filter(College.email == "admin@apex.demo").first()
+        # College 2: Chaitanya Bharathi Institute of Technology (CBIT)
+        col2 = db.query(College).filter((College.email == "admin@cbit.demo") | (College.email == "admin@apex.demo")).first()
         if not col2:
             col2 = College(
-                name="Apex Institute of Technology",
-                email="admin@apex.demo",
+                name="Chaitanya Bharathi Institute of Technology (CBIT)",
+                email="admin@cbit.demo",
                 password=hash_password("Admin@1234"),
-                college_code="APEX2026",
-                location="Knowledge City Campus, Hinjawadi Phase 2",
-                city="Pune",
-                state="Maharashtra",
-                description="Premier engineering and research institute with eco-friendly smart residential quarters and modern academic labs.",
-                image_url="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800&auto=format&fit=crop&q=80"
+                college_code="CBIT2026",
+                location="Gandipet, Kokapet",
+                city="Hyderabad",
+                state="Telangana",
+                description="Premier autonomous engineering institute established in 1979 in Gandipet, Hyderabad, accredited NAAC A++ with world-class residential dorms, coding centers, and innovation hubs.",
+                image_url="https://www.cbit.ac.in/wp-content/themes/CBIT/images/placeholder.jpg"
             )
             db.add(col2)
             db.commit()
             db.refresh(col2)
+        else:
+            col2.name = "Chaitanya Bharathi Institute of Technology (CBIT)"
+            col2.email = "admin@cbit.demo"
+            col2.college_code = "CBIT2026"
+            col2.location = "Gandipet, Kokapet"
+            col2.city = "Hyderabad"
+            col2.state = "Telangana"
+            col2.description = "Premier autonomous engineering institute established in 1979 in Gandipet, Hyderabad, accredited NAAC A++ with world-class residential dorms, coding centers, and innovation hubs."
+            col2.image_url = "https://www.cbit.ac.in/wp-content/themes/CBIT/images/placeholder.jpg"
+            db.commit()
+
+        # College 3: Sreenidhi Institute of Science and Technology (SNIST)
+        col3 = db.query(College).filter((College.email == "admin@snist.demo") | (College.email == "admin@nidt.demo")).first()
+        if not col3:
+            col3 = College(
+                name="Sreenidhi Institute of Science and Technology (SNIST)",
+                email="admin@snist.demo",
+                password=hash_password("Admin@1234"),
+                college_code="SNIST2026",
+                location="Yamnampet, Ghatkesar",
+                city="Hyderabad",
+                state="Telangana",
+                description="Leading autonomous engineering and research institution in Yamnampet, Ghatkesar, Hyderabad with modern studio suites, sports arenas, biometric access, and active student innovation spaces.",
+                image_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf1XoE3J7LKUTR3Q_f6bMyS4dEoYK9GMVYm6XYg5rDEtnL_Etm1V61Egg&s=10"
+            )
+            db.add(col3)
+            db.commit()
+            db.refresh(col3)
+        else:
+            col3.name = "Sreenidhi Institute of Science and Technology (SNIST)"
+            col3.email = "admin@snist.demo"
+            col3.college_code = "SNIST2026"
+            col3.location = "Yamnampet, Ghatkesar"
+            col3.city = "Hyderabad"
+            col3.state = "Telangana"
+            col3.description = "Leading autonomous engineering and research institution in Yamnampet, Ghatkesar, Hyderabad with modern studio suites, sports arenas, biometric access, and active student innovation spaces."
+            col3.image_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf1XoE3J7LKUTR3Q_f6bMyS4dEoYK9GMVYm6XYg5rDEtnL_Etm1V61Egg&s=10"
+            db.commit()
 
         # ── 2. Hostels Setup ──────────────────────────────────────────
         hostels_data = [
             {
                 "college_id": college.id,
-                "name": "Nilgiri Boys Hostel (Block A)",
+                "name": "ACE Boys Hostel (Block A - Godavari)",
                 "gender": "Male",
                 "hostel_type": "Both",
                 "room_types": ["Single", "Double", "Triple"],
@@ -79,7 +119,7 @@ def seed_discovery_and_complaint_data():
             },
             {
                 "college_id": college.id,
-                "name": "Shivalik Girls Hostel (Block B)",
+                "name": "ACE Girls Hostel (Block B - Krishna)",
                 "gender": "Female",
                 "hostel_type": "Both",
                 "room_types": ["Single", "Double"],
@@ -91,7 +131,7 @@ def seed_discovery_and_complaint_data():
             },
             {
                 "college_id": college.id,
-                "name": "Ganga AC Executive Tower",
+                "name": "ACE Executive Residency (Block C - Kaveri)",
                 "gender": "Co-ed",
                 "hostel_type": "AC",
                 "room_types": ["Single", "Double"],
@@ -103,15 +143,51 @@ def seed_discovery_and_complaint_data():
             },
             {
                 "college_id": col2.id,
-                "name": "Sahyadri Heights Hostel",
-                "gender": "Co-ed",
+                "name": "CBIT Gandipet Boys Hostel (Block 1)",
+                "gender": "Male",
                 "hostel_type": "Both",
-                "room_types": ["Single", "Double", "Quad"],
-                "facilities": ["Wi-Fi", "Mess", "Recreation Room", "Solar Water Heating", "Study Room", "Security"],
-                "fee_structure": "₹70,000 - ₹95,000 / year",
-                "total_capacity": 200,
-                "description": "Scenic hilltop hostel offering panoramic views, spacious sports courts, high-speed Wi-Fi, and well-maintained dining facilities.",
+                "room_types": ["Single", "Double", "Triple"],
+                "facilities": ["High-Speed Wi-Fi", "Mess", "Gym", "Sports Ground", "Study Lounge", "Security", "Solar Hot Water"],
+                "fee_structure": "₹85,000 - ₹1,15,000 / year",
+                "total_capacity": 250,
+                "description": "Well-furnished boys hostel located inside the tranquil Gandipet campus with full sports grounds, reading rooms, and balanced South & North dining.",
                 "image_url": "https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=800&auto=format&fit=crop&q=80"
+            },
+            {
+                "college_id": col2.id,
+                "name": "CBIT Emerald Girls Residency (Block 2)",
+                "gender": "Female",
+                "hostel_type": "AC",
+                "room_types": ["Single", "Double"],
+                "facilities": ["Central AC", "Wi-Fi", "24/7 Biometric Security", "Gym", "Organic Dining", "Laundry"],
+                "fee_structure": "₹95,000 - ₹1,30,000 / year",
+                "total_capacity": 200,
+                "description": "Modern air-conditioned residence for women engineers featuring biometric turnstiles, laundry support, and manicured lawns.",
+                "image_url": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop&q=80"
+            },
+            {
+                "college_id": col3.id,
+                "name": "SNIST Scholars Boys Wing (Block A)",
+                "gender": "Male",
+                "hostel_type": "Both",
+                "room_types": ["Single", "Double", "Triple"],
+                "facilities": ["Wi-Fi", "Mess", "Innovation Lab Access", "Recreation Room", "Gym", "Security"],
+                "fee_structure": "₹80,000 - ₹1,05,000 / year",
+                "total_capacity": 220,
+                "description": "Dynamic hostel wing near Yamnampet academic blocks with round-the-clock power backup, student coding cells, and buffet mess.",
+                "image_url": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&auto=format&fit=crop&q=80"
+            },
+            {
+                "college_id": col3.id,
+                "name": "SNIST Priyadarshini Girls Hostel (Block B)",
+                "gender": "Female",
+                "hostel_type": "Both",
+                "room_types": ["Single", "Double"],
+                "facilities": ["Wi-Fi", "Hygienic Mess", "24/7 Security & Wardens", "Study Pods", "Indoor Games", "Solar Water"],
+                "fee_structure": "₹85,000 - ₹1,10,000 / year",
+                "total_capacity": 180,
+                "description": "Safe, serene residential hall for girl students offering spacious well-ventilated rooms, nutritious food, and round-the-clock warden support.",
+                "image_url": "https://images.unsplash.com/photo-1525921429624-479b6a26d84d?w=800&auto=format&fit=crop&q=80"
             },
         ]
 
@@ -128,6 +204,11 @@ def seed_discovery_and_complaint_data():
                 db.refresh(h)
                 hostel_map[h.name] = h
             else:
+                existing.description = h_data["description"]
+                existing.facilities = h_data["facilities"]
+                existing.fee_structure = h_data["fee_structure"]
+                existing.image_url = h_data["image_url"]
+                db.commit()
                 hostel_map[existing.name] = existing
 
         # ── 3. Students Fetch ──────────────────────────────────────────
@@ -136,9 +217,9 @@ def seed_discovery_and_complaint_data():
         priya = db.query(Student).filter(Student.email == "priya@cohabit.demo").first()
         ananya = db.query(Student).filter(Student.email == "ananya@cohabit.demo").first()
 
-        nilgiri = hostel_map.get("Nilgiri Boys Hostel (Block A)")
-        shivalik = hostel_map.get("Shivalik Girls Hostel (Block B)")
-        ganga = hostel_map.get("Ganga AC Executive Tower")
+        nilgiri = hostel_map.get("ACE Boys Hostel (Block A - Godavari)")
+        shivalik = hostel_map.get("ACE Girls Hostel (Block B - Krishna)")
+        ganga = hostel_map.get("ACE Executive Residency (Block C - Kaveri)")
 
         # ── 4. Seed Verified Reviews ───────────────────────────────────
         if aarav and nilgiri:

@@ -22,7 +22,6 @@ function Sidebar() {
     { to: "/dashboard",             label: "Dashboard",            icon: <LayoutDashboard size={18} /> },
     { to: "/management/complaints", label: "Complaints Desk",      icon: <Inbox size={18} /> },
     { to: "/reviews",               label: "Verified Reviews",     icon: <Star size={18} /> },
-    { to: "/discover",              label: "Hostel Discovery",     icon: <Compass size={18} /> },
     { to: "/sessions",              label: "Allocation Sessions",  icon: <Layers size={18} /> },
     { to: "/students",              label: "Students",              icon: <Users size={18} /> },
     { to: "/recommendations",       label: "AI Allocations",       icon: <Lightbulb size={18} /> },

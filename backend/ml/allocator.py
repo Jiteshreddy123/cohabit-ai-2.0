@@ -202,10 +202,15 @@ def allocate_rooms(db, session_id: int) -> dict:
         pref_size = student.preferred_room_size
         gender = student.gender
 
+        # Adaptive fallback if preferred size is None or not in available rooms
         if pref_size is None or pref_size not in available_rooms or available_rooms[pref_size] <= 0:
-            # No rooms of this type available — will report as unallocated
-            unallocated.append(student)
-            continue
+            valid_available = [k for k, v in available_rooms.items() if v > 0]
+            if valid_available:
+                # Fallback to closest available room capacity
+                pref_size = min(valid_available, key=lambda x: abs(x - (pref_size or 2)))
+            else:
+                unallocated.append(student)
+                continue
 
         key = (int(pref_size), gender)
         groups.setdefault(key, []).append(student)

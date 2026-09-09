@@ -21,8 +21,17 @@ def get_my_room(
     current_student=Depends(get_current_student)
 ):
     session = current_student.allocation_session
-    if not session.is_published:
-        return {"published": False, "message": "Room allocation has not yet been published."}
+    if not session:
+        # Check if student was allocated in any recommendation directly
+        membership = (
+            db.query(RecommendationMember)
+            .filter(RecommendationMember.student_id == current_student.id)
+            .first()
+        )
+        if not membership:
+            return {"published": False, "allocated": False, "message": "No active allocation session found for your profile."}
+    elif not session.is_published:
+        return {"published": False, "allocated": False, "message": "Room allocation has not yet been published by campus management."}
 
     membership = (
         db.query(RecommendationMember)

@@ -13,20 +13,22 @@ const DEMO_USERS = {
     name: "Demo Admin",
     email: "admin@cohabit.demo",
     role: "admin",
-    collegeCode: "DEMO2024",
+    collegeCode: "ACE2026",
   },
   student: {
-    id: 101,
-    name: "Demo Student",
-    email: "student@cohabit.demo",
+    id: 1,
+    name: "Aarav Sharma",
+    email: "aarav@cohabit.demo",
     role: "student",
-    collegeCode: "DEMO2024",
+    collegeCode: "ACE2026",
+    rollNumber: "CS21B001",
+    branch: "Computer Science",
   },
 };
 
 export const DEMO_STUDENTS = [
   {
-    id: 15,
+    id: 1,
     name: "Aarav Sharma",
     rollNumber: "CS21B001",
     email: "aarav@cohabit.demo",
@@ -36,7 +38,7 @@ export const DEMO_STUDENTS = [
     badge: "Night Owl · CS (Year 3)"
   },
   {
-    id: 17,
+    id: 2,
     name: "Rohan Mehta",
     rollNumber: "ME21B003",
     email: "rohan@cohabit.demo",
@@ -46,7 +48,7 @@ export const DEMO_STUDENTS = [
     badge: "Night Owl · ME (Year 3)"
   },
   {
-    id: 16,
+    id: 3,
     name: "Priya Patel",
     rollNumber: "EE21B002",
     email: "priya@cohabit.demo",
@@ -56,7 +58,7 @@ export const DEMO_STUDENTS = [
     badge: "Early Bird · EE (Year 3)"
   },
   {
-    id: 18,
+    id: 4,
     name: "Ananya Verma",
     rollNumber: "CS21B004",
     email: "ananya@cohabit.demo",
@@ -77,26 +79,31 @@ export const loginAsDemoAdmin = async () => {
       localStorage.setItem("token", res.data.access_token);
       localStorage.setItem("role", "admin");
       localStorage.setItem("user", JSON.stringify({
-        id: 4,
-        name: "Demo Admin",
+        id: 1,
+        name: "Campus Administrator",
         email: "admin@cohabit.demo",
         role: "admin",
-        collegeCode: res.data.college_code || "A8FC026B",
+        collegeCode: res.data.college_code || "ACE2026",
       }));
-      localStorage.setItem("college", JSON.stringify({ email: "admin@cohabit.demo" }));
+      localStorage.setItem("college", JSON.stringify({ email: "admin@cohabit.demo", collegeCode: "ACE2026" }));
       return true;
     }
   } catch (err) {
-    console.warn("Admin auto-login error:", err);
+    console.warn("Admin auto-login network error, using instant mock session:", err);
   }
-  return false;
+  // Fallback demo admin session
+  localStorage.setItem("token", DEMO_TOKEN);
+  localStorage.setItem("role", "admin");
+  localStorage.setItem("user", JSON.stringify(DEMO_USERS.admin));
+  localStorage.setItem("college", JSON.stringify({ email: "admin@cohabit.demo", collegeCode: "ACE2026" }));
+  return true;
 };
 
 export const loginAsDemoStudent = async (studentId) => {
   const student = DEMO_STUDENTS.find(s => s.id === Number(studentId)) || DEMO_STUDENTS[0];
   try {
     const res = await apiClient.post("/student/login", {
-      college_code: "A8FC026B",
+      college_code: "ACE2026",
       email: student.email,
       password: student.rollNumber,
     });
@@ -107,17 +114,31 @@ export const loginAsDemoStudent = async (studentId) => {
         id: res.data.student_id || student.id,
         name: res.data.student_name || student.name,
         role: "student",
-        collegeCode: "A8FC026B",
+        collegeCode: "ACE2026",
         email: student.email,
         rollNumber: student.rollNumber,
         branch: student.branch,
+        gender: student.gender,
       }));
       return true;
     }
   } catch (err) {
-    console.warn("Student auto-login failed for", student.name, err);
+    console.warn("Student auto-login failed for", student.name, ", using instant demo fallback:", err);
   }
-  return false;
+  // Fallback demo student session
+  localStorage.setItem("token", DEMO_TOKEN);
+  localStorage.setItem("role", "student");
+  localStorage.setItem("user", JSON.stringify({
+    id: student.id,
+    name: student.name,
+    role: "student",
+    collegeCode: "ACE2026",
+    email: student.email,
+    rollNumber: student.rollNumber,
+    branch: student.branch,
+    gender: student.gender,
+  }));
+  return true;
 };
 
 export const initDemoSession = async () => {
@@ -130,23 +151,10 @@ export const initDemoSession = async () => {
 
 export const switchDemoRole = async (role, studentId) => {
   if (role === "student") {
-    const success = await loginAsDemoStudent(studentId || 15);
-    if (success) {
-      window.location.href = "/dashboard";
-      return;
-    }
+    await loginAsDemoStudent(studentId || 1);
   } else {
-    const success = await loginAsDemoAdmin();
-    if (success) {
-      window.location.href = "/dashboard";
-      return;
-    }
+    await loginAsDemoAdmin();
   }
-
-  // Fallback
-  const user = DEMO_USERS[role] || DEMO_USERS.admin;
-  localStorage.setItem("token", DEMO_TOKEN);
-  localStorage.setItem("user", JSON.stringify(user));
   window.location.href = "/dashboard";
 };
 // ─────────────────────────────────────────────────────────────────────────────
