@@ -7,6 +7,7 @@ personality traits and preferences for use in the roommate compatibility scorer.
 Uses the google.genai SDK (new client API) for consistency with interview_bot.py.
 """
 
+import os
 import json
 import logging
 from google import genai
@@ -16,8 +17,17 @@ from typing import Optional
 
 logger = logging.getLogger(__name__)
 
-# Initialize the genai client
-client = genai.Client(api_key=settings.GEMINI_API_KEY)
+
+def get_client():
+    """Lazily initialize and return the Google Gemini client if an API key is available."""
+    key = settings.GEMINI_API_KEY or os.environ.get("GEMINI_API_KEY")
+    if key and key.strip():
+        try:
+            return genai.Client(api_key=key.strip())
+        except Exception as e:
+            logger.warning(f"Could not initialize Google GenAI Client: {e}")
+    return None
+
 
 
 class TraitSchema(BaseModel):
@@ -87,10 +97,15 @@ Return ONLY valid JSON matching this exact structure (no markdown, no extra text
 """
 
     try:
+        client = get_client()
+        if not client:
+            raise RuntimeError("Gemini client not initialized; running local heuristic extraction.")
+
         response = client.models.generate_content(
             model="gemini-2.5-flash",
             contents=prompt
         )
+
         response_text = response.text.strip()
 
         # Strip markdown code fences if present
