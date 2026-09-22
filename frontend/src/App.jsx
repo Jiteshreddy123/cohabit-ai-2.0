@@ -31,8 +31,11 @@ import Reviews from "./pages/Reviews";
 import MyComplaints from "./pages/MyComplaints";
 import ManagementComplaints from "./pages/ManagementComplaints";
 import PublicIssues from "./pages/PublicIssues";
+import HosClubs from "./pages/HosClubs";
+import MentorConnect from "./pages/MentorConnect";
 
 import StudentLogin from "./pages/StudentLogin";
+
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import { authApi } from "./api/authApi";
@@ -120,8 +123,11 @@ function App() {
 
           {/* ── Protected Routes ───────────────────────────────── */}
           <Route path="/dashboard" element={<SharedRoute><Dashboard /></SharedRoute>} />
+          <Route path="/hos-clubs" element={<SharedRoute><HosClubs /></SharedRoute>} />
+          <Route path="/mentorship" element={<SharedRoute><MentorConnect /></SharedRoute>} />
 
           {/* ── Feature 1: Verified Student Reviews ───────────── */}
+
           <Route path="/reviews" element={<SharedRoute><Reviews /></SharedRoute>} />
 
           {/* ── Feature 2: Student Complaints & Management ─────── */}

@@ -22,6 +22,7 @@ class Student(Base):
     gender = Column(String(10), nullable=False)
     password = Column(String(255), nullable=True)
     interview_status = Column(String(20), default="Pending")
+    mentor_id = Column(Integer, ForeignKey("academic_mentors.id"), nullable=True)
 
     # ── Check Constraints ─────────────────────────────────────
     __table_args__ = (
@@ -48,3 +49,13 @@ class Student(Base):
         "RecommendationMember", back_populates="student",
         cascade="all, delete-orphan"
     )
+    mentor = relationship("AcademicMentor", back_populates="mentees")
+    club_memberships = relationship(
+        "HosClubMembership", back_populates="student",
+        cascade="all, delete-orphan"
+    )
+    mentor_calls = relationship(
+        "MonthlyCheckinCall", back_populates="student",
+        cascade="all, delete-orphan"
+    )
+

@@ -1,6 +1,9 @@
 # Virtual environment
 venv/
 .venv/
+backend/static/
+frontend/dist/
+
 
 # Python cache
 __pycache__/

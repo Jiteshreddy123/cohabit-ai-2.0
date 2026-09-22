@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import {
   User, FileText, CheckCircle, Home, Clock, ShoppingBag,
   Zap, MessageCircle, ShieldCheck, Star, AlertTriangle,
-  Compass, Globe, CheckCircle2, ChevronRight
+  Compass, Globe, CheckCircle2, ChevronRight, Sparkles, HeartPulse
 } from "lucide-react";
+
 import apiClient from "../api/apiClient";
 import { complaintApi } from "../api/complaintApi";
 
@@ -236,9 +237,71 @@ const StudentDashboard = () => {
         </div>
       </div>
 
+      {/* ── Campus Life, Clubs & Mentorship ──────────────────────── */}
+      <div className="space-y-3">
+        <h2 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+          <Sparkles size={18} className="text-brand-500" />
+          Campus Life, Clubs &amp; Well-Being Support
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Hos-Clubs */}
+          <Link
+            to="/hos-clubs"
+            className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm p-5 flex flex-col justify-between hover:border-purple-500 hover:shadow-md transition-all group"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-2.5">
+                <div className="p-2.5 rounded-xl bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                  <Sparkles size={20} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm">Hostel Clubs (Hos-Clubs)</h3>
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold flex items-center gap-1">
+                    <ShieldCheck size={11} /> Mandatory Requirement (Min 1 Club)
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
+                Join Dance, Music, Coding, Social Service, and Mess Committees to break hostel isolation and build lifelong connections.
+              </p>
+            </div>
+            <span className="mt-3 text-xs font-bold text-purple-600 dark:text-purple-400 flex items-center gap-1">
+              Explore Hos-Clubs &amp; Compliance →
+            </span>
+          </Link>
+
+          {/* Mentor Connect */}
+          <Link
+            to="/mentorship"
+            className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm p-5 flex flex-col justify-between hover:border-rose-500 hover:shadow-md transition-all group"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-2.5">
+                <div className="p-2.5 rounded-xl bg-rose-50 dark:bg-rose-500/10 text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                  <HeartPulse size={20} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm">Monthly Mentorship (Mentor Connect)</h3>
+                  <span className="text-[10px] text-brand-600 dark:text-brand-400 font-semibold flex items-center gap-1">
+                    1-on-1 Confidential Pulse Call
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
+                Monthly scheduled call with your academic faculty mentor to share room, academic, or mental health struggles.
+              </p>
+            </div>
+            <span className="mt-3 text-xs font-bold text-rose-600 dark:text-rose-400 flex items-center gap-1">
+              View Scheduled Call &amp; Pre-Notes →
+            </span>
+          </Link>
+        </div>
+      </div>
+
       {/* ── Peer Engagement Features ──────────────────────────────── */}
       <div className="space-y-3">
         <h2 className="text-base font-bold text-gray-900 dark:text-white">Peer Network &amp; Micro-Economy</h2>
+
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
           {/* Marketplace */}

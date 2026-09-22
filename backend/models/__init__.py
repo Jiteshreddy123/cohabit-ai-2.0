@@ -21,6 +21,8 @@ from models.chat import ChatConversation, ChatMessage
 from models.hostel import Hostel
 from models.review import Review, ReviewImage
 from models.complaint import Complaint, ComplaintImage, ComplaintUpdate
+from models.club import HosClub, HosClubMembership, HosClubActivity
+from models.mentorship import AcademicMentor, MonthlyCheckinCall
 
 __all__ = [
     "College",
@@ -41,4 +43,10 @@ __all__ = [
     "Complaint",
     "ComplaintImage",
     "ComplaintUpdate",
+    "HosClub",
+    "HosClubMembership",
+    "HosClubActivity",
+    "AcademicMentor",
+    "MonthlyCheckinCall",
 ]
+

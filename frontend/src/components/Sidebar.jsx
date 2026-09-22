@@ -5,7 +5,7 @@ import {
   LayoutDashboard, Users, Layers, Lightbulb,
   Settings, FileText, ShoppingBag, Zap, MessageCircle,
   ShieldCheck, GraduationCap, Compass, AlertTriangle,
-  Star, Globe, Inbox, Building2
+  Star, Globe, Inbox, Building2, Sparkles, HeartPulse
 } from "lucide-react";
 
 function Sidebar() {
@@ -20,6 +20,8 @@ function Sidebar() {
 
   const adminLinks = [
     { to: "/dashboard",             label: "Dashboard",            icon: <LayoutDashboard size={18} /> },
+    { to: "/hos-clubs",             label: "Hos-Clubs",            icon: <Sparkles size={18} /> },
+    { to: "/mentorship",            label: "Mentorship Desk",      icon: <HeartPulse size={18} /> },
     { to: "/management/complaints", label: "Complaints Desk",      icon: <Inbox size={18} /> },
     { to: "/reviews",               label: "Verified Reviews",     icon: <Star size={18} /> },
     { to: "/sessions",              label: "Allocation Sessions",  icon: <Layers size={18} /> },
@@ -29,6 +31,8 @@ function Sidebar() {
 
   const studentLinks = [
     { to: "/dashboard",     label: "Dashboard",         icon: <LayoutDashboard size={18} /> },
+    { to: "/hos-clubs",     label: "Hos-Clubs",         icon: <Sparkles size={18} /> },
+    { to: "/mentorship",    label: "Mentor Connect",    icon: <HeartPulse size={18} /> },
     { to: "/discover",      label: "Discover Hostels",  icon: <Compass size={18} /> },
     { to: "/reviews",       label: "Campus Reviews",    icon: <Star size={18} /> },
     { to: "/complaints",    label: "My Complaints",     icon: <AlertTriangle size={18} /> },
@@ -38,6 +42,7 @@ function Sidebar() {
     { to: "/micro-gigs",    label: "Quick Gigs",        icon: <Zap size={18} /> },
     { to: "/chat",          label: "Messages",          icon: <MessageCircle size={18} /> },
   ];
+
 
   const links = isAdmin ? adminLinks : studentLinks;
 

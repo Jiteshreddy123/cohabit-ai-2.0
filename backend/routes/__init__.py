@@ -12,6 +12,8 @@ from routes.reviews import router as review_router
 from routes.complaints import router as complaint_router
 from routes.management import router as management_router
 from routes.discover import router as discover_router
+from routes.clubs import router as clubs_router
+from routes.mentorship import router as mentorship_router
 
 __all__ = [
     "health_router",
@@ -28,6 +30,9 @@ __all__ = [
     "complaint_router",
     "management_router",
     "discover_router",
+    "clubs_router",
+    "mentorship_router",
     "get_current_college",
     "get_current_student",
 ]
+

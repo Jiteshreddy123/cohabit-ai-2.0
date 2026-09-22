@@ -21,6 +21,7 @@ def init_db():
             conn.execute(text("ALTER TABLE college ADD COLUMN IF NOT EXISTS state VARCHAR(100) DEFAULT 'Karnataka';"))
             conn.execute(text("ALTER TABLE college ADD COLUMN IF NOT EXISTS description VARCHAR(1000) DEFAULT 'Premier institution offering modern campus and residential living facilities.';"))
             conn.execute(text("ALTER TABLE college ADD COLUMN IF NOT EXISTS image_url VARCHAR(500);"))
+            conn.execute(text("ALTER TABLE student ADD COLUMN IF NOT EXISTS mentor_id INTEGER REFERENCES academic_mentors(id);"))
 
         print("Success! All tables and columns created or already exist.")
     except Exception as e:

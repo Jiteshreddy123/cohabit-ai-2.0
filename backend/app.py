@@ -13,7 +13,9 @@ from routes import (
     interview_router, trait_router, recommendation_router,
     marketplace_router, microgig_router, chat_router,
     review_router, complaint_router, management_router, discover_router,
+    clubs_router, mentorship_router,
 )
+
 from utils.exceptions import AppError
 
 # ── Logging Configuration ────────────────────────────────────
@@ -40,10 +42,45 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# ── Create Database Tables ───────────────────────────────────
-from database import engine, Base
+# ── Create Database Tables & Auto-Seed Mock Details ───────────
+from database import engine, Base, SessionLocal
 import models # Ensure models are loaded
+from sqlalchemy import text
+
 Base.metadata.create_all(bind=engine)
+
+# Apply non-destructive migrations safely
+try:
+    with engine.begin() as conn:
+        conn.execute(text("ALTER TABLE college ADD COLUMN IF NOT EXISTS location VARCHAR(255) DEFAULT 'Main Campus';"))
+        conn.execute(text("ALTER TABLE college ADD COLUMN IF NOT EXISTS city VARCHAR(100) DEFAULT 'Bengaluru';"))
+        conn.execute(text("ALTER TABLE college ADD COLUMN IF NOT EXISTS state VARCHAR(100) DEFAULT 'Karnataka';"))
+        conn.execute(text("ALTER TABLE college ADD COLUMN IF NOT EXISTS description VARCHAR(1000) DEFAULT 'Premier institution offering modern campus and residential living facilities.';"))
+        conn.execute(text("ALTER TABLE college ADD COLUMN IF NOT EXISTS image_url VARCHAR(500);"))
+        conn.execute(text("ALTER TABLE student ADD COLUMN IF NOT EXISTS mentor_id INTEGER REFERENCES academic_mentors(id);"))
+except Exception as mig_err:
+    logger.warning(f"Database migration notice: {mig_err}")
+
+# Auto-seed mock data on startup if database is fresh
+try:
+    db_check = SessionLocal()
+    from models.college import College
+    from models.club import HosClub
+    if db_check.query(College).count() == 0:
+        logger.info("Fresh database detected. Seeding mock discovery, students, reviews, and complaints...")
+        from seed_discovery_data import seed_discovery_and_complaint_data
+        from seed_demo_students import seed_demo_students
+        seed_discovery_and_complaint_data()
+        seed_demo_students()
+
+    if db_check.query(HosClub).count() == 0:
+        logger.info("Seeding mock Hos-Clubs and Academic Mentors...")
+        from seed_clubs_and_mentors import seed_clubs_and_mentors
+        seed_clubs_and_mentors()
+    db_check.close()
+except Exception as seed_err:
+    logger.warning(f"Auto-seed notice: {seed_err}")
+
 
 
 # ── CORS Middleware ───────────────────────────────────────────
@@ -108,6 +145,9 @@ app.include_router(review_router)
 app.include_router(complaint_router)
 app.include_router(management_router)
 app.include_router(discover_router)
+app.include_router(clubs_router)
+app.include_router(mentorship_router)
+
 
 # ── Uploads Static Directory ──────────────────────────────────
 uploads_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
