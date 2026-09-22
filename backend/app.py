@@ -69,9 +69,9 @@ try:
     if db_check.query(College).count() == 0:
         logger.info("Fresh database detected. Seeding mock discovery, students, reviews, and complaints...")
         from seed_discovery_data import seed_discovery_and_complaint_data
-        from seed_demo_students import seed_demo_students
+        from seed_demo_students import seed_demo_students_and_interviews
         seed_discovery_and_complaint_data()
-        seed_demo_students()
+        seed_demo_students_and_interviews()
 
     if db_check.query(HosClub).count() == 0:
         logger.info("Seeding mock Hos-Clubs and Academic Mentors...")
@@ -80,6 +80,7 @@ try:
     db_check.close()
 except Exception as seed_err:
     logger.warning(f"Auto-seed notice: {seed_err}")
+
 
 
 
@@ -149,7 +150,24 @@ app.include_router(clubs_router)
 app.include_router(mentorship_router)
 
 
+@app.api_route("/api/seed-mock-data", methods=["GET", "POST"])
+def trigger_seed_mock_data():
+    """Endpoint to seed or refresh mock colleges, demo students, hostels, reviews, clubs, and mentors."""
+    from seed_discovery_data import seed_discovery_and_complaint_data
+    from seed_demo_students import seed_demo_students_and_interviews
+    from seed_clubs_and_mentors import seed_clubs_and_mentors
+    try:
+        seed_discovery_and_complaint_data()
+        seed_demo_students_and_interviews()
+        seed_clubs_and_mentors()
+        return {"status": "success", "message": "All mock data (Colleges, Hostels, Reviews, Students, Hos-Clubs, Mentors) seeded successfully!"}
+    except Exception as e:
+        logger.exception(f"Error executing manual seed: {e}")
+        return JSONResponse(status_code=500, content={"status": "error", "detail": str(e)})
+
+
 # ── Uploads Static Directory ──────────────────────────────────
+
 uploads_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
 os.makedirs(uploads_dir, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
