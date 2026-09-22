@@ -13,13 +13,22 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from config import settings
 
 # ── Engine ────────────────────────────────────────────────────
-engine = create_engine(
-    settings.get_db_url,
-    pool_pre_ping=True,       # Verify connections before checkout
-    pool_size=10,             # Max persistent connections
-    max_overflow=20,          # Extra connections under load
-    echo=False,               # Set True to log SQL queries for debugging
-)
+db_url = settings.get_db_url
+if db_url.startswith("sqlite"):
+    engine = create_engine(
+        db_url,
+        connect_args={"check_same_thread": False},
+        echo=False,
+    )
+else:
+    engine = create_engine(
+        db_url,
+        pool_pre_ping=True,       # Verify connections before checkout
+        pool_size=10,             # Max persistent connections
+        max_overflow=20,          # Extra connections under load
+        echo=False,               # Set True to log SQL queries for debugging
+    )
+
 
 # ── Session Factory ───────────────────────────────────────────
 SessionLocal = sessionmaker(
