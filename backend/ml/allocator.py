@@ -155,7 +155,27 @@ def allocate_rooms(db, session_id: int) -> dict:
     if not session:
         raise ValueError(f"Session {session_id} not found")
 
+    # Clear previous recommendations for this session to prevent unique constraint conflicts
+    try:
+        existing_recs = db.execute(
+            text("SELECT id FROM recommendations WHERE allocation_session_id = :sid"),
+            {"sid": session_id}
+        ).fetchall()
+        for r in existing_recs:
+            db.execute(
+                text("DELETE FROM recommendation_members WHERE recommendation_id = :rid"),
+                {"rid": r[0]}
+            )
+        db.execute(
+            text("DELETE FROM recommendations WHERE allocation_session_id = :sid"),
+            {"sid": session_id}
+        )
+        db.commit()
+    except Exception as del_err:
+        logger.warning(f"Notice clearing previous recommendations: {del_err}")
+
     room_inventory = session.room_inventory or {}
+
     if isinstance(room_inventory, str):
         try:
             room_inventory = json.loads(room_inventory)
@@ -312,6 +332,10 @@ def allocate_rooms(db, session_id: int) -> dict:
             rec_id = res.fetchone()[0]
 
             for student_id in occupant_ids:
+                db.execute(
+                    text("DELETE FROM recommendation_members WHERE student_id = :sid"),
+                    {"sid": student_id}
+                )
                 db.execute(
                     text("INSERT INTO recommendation_members (recommendation_id, student_id) VALUES (:rid, :sid)"),
                     {"rid": rec_id, "sid": student_id}

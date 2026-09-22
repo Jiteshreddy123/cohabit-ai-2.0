@@ -65,18 +65,24 @@ except Exception as mig_err:
 try:
     db_check = SessionLocal()
     from models.college import College
+    from models.student import Student
     from models.club import HosClub
+
     if db_check.query(College).count() == 0:
-        logger.info("Fresh database detected. Seeding mock discovery, students, reviews, and complaints...")
+        logger.info("Fresh database detected. Seeding mock discovery and complaints...")
         from seed_discovery_data import seed_discovery_and_complaint_data
-        from seed_demo_students import seed_demo_students_and_interviews
         seed_discovery_and_complaint_data()
+
+    if db_check.query(Student).count() == 0:
+        logger.info("Seeding mock demo students and interviews...")
+        from seed_demo_students import seed_demo_students_and_interviews
         seed_demo_students_and_interviews()
 
     if db_check.query(HosClub).count() == 0:
         logger.info("Seeding mock Hos-Clubs and Academic Mentors...")
         from seed_clubs_and_mentors import seed_clubs_and_mentors
         seed_clubs_and_mentors()
+
     db_check.close()
 except Exception as seed_err:
     logger.warning(f"Auto-seed notice: {seed_err}")

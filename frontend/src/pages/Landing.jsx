@@ -1,5 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { authApi } from "../api/authApi";
 import {
   Brain, Users, Building2, ChevronRight, ShieldCheck, Zap,
   Sparkles, Star, MapPin, Compass, CheckCircle2, ArrowRight,
@@ -79,6 +80,37 @@ const FEATURED_COLLEGES = [
 ];
 
 export default function Landing() {
+  const navigate = useNavigate();
+  const [demoLoading, setDemoLoading] = useState("");
+
+  const handleDemoStudent = async () => {
+    setDemoLoading("student");
+    try {
+      await authApi.studentLogin("ACE2026", "aarav@cohabit.demo", "CS21B001");
+      navigate("/dashboard");
+      window.location.reload();
+    } catch (err) {
+      console.error("Student demo login error:", err);
+      navigate("/student-login");
+    } finally {
+      setDemoLoading("");
+    }
+  };
+
+  const handleDemoAdmin = async () => {
+    setDemoLoading("admin");
+    try {
+      await authApi.login("admin@cohabit.demo", "Admin@1234");
+      navigate("/dashboard");
+      window.location.reload();
+    } catch (err) {
+      console.error("Admin demo login error:", err);
+      navigate("/login");
+    } finally {
+      setDemoLoading("");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#070b14] text-gray-100 selection:bg-brand-500/30 selection:text-white font-sans flex flex-col relative overflow-x-hidden">
       
@@ -110,7 +142,11 @@ export default function Landing() {
           </Link>
 
           {/* Center Nav Links */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+          <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-gray-300">
+            <Link to="/discover" className="hover:text-brand-400 transition-colors flex items-center gap-1 text-brand-300">
+              <Compass size={15} className="text-brand-400" />
+              Discover Hostels
+            </Link>
             <a href="#featured-colleges" className="hover:text-brand-400 transition-colors flex items-center gap-1">
               <Building2 size={15} className="text-brand-400" />
               Featured Campuses
@@ -124,16 +160,34 @@ export default function Landing() {
           </nav>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              onClick={handleDemoStudent}
+              disabled={!!demoLoading}
+              className="hidden lg:flex items-center gap-1 px-3 py-1.5 rounded-lg bg-brand-500/10 hover:bg-brand-500/20 text-brand-300 border border-brand-500/30 text-xs font-semibold transition-colors"
+              title="1-Click Login as Aarav Sharma"
+            >
+              <Users size={13} />
+              {demoLoading === "student" ? "Loading..." : "Demo Student"}
+            </button>
+            <button
+              onClick={handleDemoAdmin}
+              disabled={!!demoLoading}
+              className="hidden lg:flex items-center gap-1 px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 text-xs font-semibold transition-colors"
+              title="1-Click Login as Campus Admin"
+            >
+              <Building2 size={13} />
+              {demoLoading === "admin" ? "Loading..." : "Demo Admin"}
+            </button>
             <Link
               to="/login"
-              className="text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all border border-transparent hover:border-gray-700"
+              className="text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/80 transition-all border border-transparent hover:border-gray-700"
             >
               Admin Login
             </Link>
             <Link
               to="/student-login"
-              className="text-xs sm:text-sm font-bold bg-gradient-to-r from-brand-500 via-teal-500 to-emerald-500 hover:from-brand-400 hover:to-emerald-400 text-gray-950 px-4 sm:px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 hover:-translate-y-0.5 flex items-center gap-1.5"
+              className="text-xs sm:text-sm font-bold bg-gradient-to-r from-brand-500 via-teal-500 to-emerald-500 hover:from-brand-400 hover:to-emerald-400 text-gray-950 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl transition-all shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 hover:-translate-y-0.5 flex items-center gap-1.5"
             >
               Student Portal <ChevronRight size={16} />
             </Link>
@@ -142,7 +196,7 @@ export default function Landing() {
       </header>
 
       {/* ── Hero Section ───────────────────────────────────────────────── */}
-      <section className="relative pt-16 pb-20 md:pt-24 md:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center z-10">
+      <section className="relative pt-12 pb-16 md:pt-20 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center z-10">
         
         {/* Floating Announcement Pill */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-brand-950/80 via-gray-900/90 to-brand-950/80 border border-brand-500/30 text-brand-300 text-xs font-semibold shadow-inner mb-8 backdrop-blur-md">
@@ -165,15 +219,85 @@ export default function Landing() {
           Empowering institutions like <strong className="text-white font-semibold">ACE Engineering College</strong> with scientific AI personality extraction, constraint-optimized roommate matching, and transparent student discovery.
         </p>
 
+        {/* ── Prominent 1-Click Live Mock Data Evaluation Showcase ── */}
+        <div className="mt-9 p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-brand-950/95 via-gray-900/90 to-teal-950/90 border border-brand-500/40 shadow-2xl backdrop-blur-xl max-w-4xl mx-auto text-left">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-gray-800">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-brand-500/20 text-brand-300 border border-brand-500/30">
+                  ⚡ Live Pre-Seeded Mock Data
+                </span>
+                <h3 className="text-base sm:text-lg font-bold text-white">Instant Demo &amp; Evaluation</h3>
+              </div>
+              <p className="text-xs text-gray-400 mt-1">
+                Explore all features instantly with pre-loaded students, clubs, mentors, and rooms (zero setup required).
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <button
+                onClick={handleDemoStudent}
+                disabled={!!demoLoading}
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-teal-400 hover:from-brand-400 hover:to-teal-300 text-gray-950 text-xs font-black transition-all shadow-md shadow-brand-500/25 flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                <Users size={14} />
+                {demoLoading === "student" ? "Signing In..." : "🚀 Launch Student (Aarav)"}
+              </button>
+              <button
+                onClick={handleDemoAdmin}
+                disabled={!!demoLoading}
+                className="px-4 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-white border border-gray-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                <Building2 size={14} className="text-brand-400" />
+                {demoLoading === "admin" ? "Signing In..." : "🏢 Launch Admin (ACE)"}
+              </button>
+              <Link
+                to="/discover"
+                className="px-4 py-2.5 rounded-xl bg-teal-950/80 hover:bg-teal-900 text-teal-300 border border-teal-500/30 text-xs font-bold transition-all flex items-center gap-1.5"
+              >
+                <Compass size={14} />
+                Discover Hostels
+              </Link>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3.5 text-xs">
+            <div className="p-3 rounded-xl bg-black/40 border border-gray-800/80 flex items-start gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Users size={14} />
+              </div>
+              <div>
+                <p className="font-semibold text-gray-200">Student Portal (Aarav Sharma · CS Year 3)</p>
+                <p className="text-[11px] text-gray-400 mt-0.5 leading-snug">
+                  Published room allocation, <strong>Hos-Clubs</strong> (7 clubs, 1-click join, events &amp; RSVP), <strong>Mentor Connect</strong> (monthly counselor call, pre-call note submission), micro-gigs, and peer chat.
+                </p>
+                <p className="text-[10px] text-gray-500 mt-1 font-mono">Code: ACE2026 | Email: aarav@cohabit.demo | Pass: CS21B001</p>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-black/40 border border-gray-800/80 flex items-start gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Building2 size={14} />
+              </div>
+              <div>
+                <p className="font-semibold text-gray-200">Campus Admin (ACE Engineering College)</p>
+                <p className="text-[11px] text-gray-400 mt-0.5 leading-snug">
+                  4 Enrolled students, personality trait extraction, OR-Tools 2-bed room solver, Hos-Clubs management, and academic mentor counseling roster.
+                </p>
+                <p className="text-[10px] text-gray-500 mt-1 font-mono">Email: admin@cohabit.demo | Pass: Admin@1234</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Hero CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
-          <a
-            href="#featured-colleges"
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+          <Link
+            to="/discover"
             className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-brand-500 via-teal-500 to-emerald-500 hover:from-brand-400 hover:to-emerald-400 text-gray-950 font-bold text-base rounded-2xl transition-all shadow-xl shadow-brand-500/25 hover:shadow-brand-500/40 hover:-translate-y-1 flex items-center justify-center gap-2"
           >
-            <Building2 size={19} />
-            Explore Partner Campuses
-          </a>
+            <Compass size={19} />
+            Explore Partner Campuses &amp; Hostels
+          </Link>
 
           <Link
             to="/student-login"
@@ -185,11 +309,10 @@ export default function Landing() {
 
           <Link
             to="/login"
-            state={{ isRegister: true }}
             className="w-full sm:w-auto px-8 py-4 bg-gray-900/50 hover:bg-gray-800/80 border border-brand-500/30 text-brand-300 font-semibold text-base rounded-2xl transition-all hover:-translate-y-1 backdrop-blur-md flex items-center justify-center gap-2"
           >
             <Building2 size={19} className="text-brand-400" />
-            Register Your Campus
+            College Admin Login
           </Link>
         </div>
 
