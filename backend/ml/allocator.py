@@ -20,9 +20,11 @@ Algorithm:
 6. Report unallocated students (those whose preferred room type has no rooms left)
 """
 
+import json
 import math
 import logging
 from typing import Dict, List, Optional
+
 
 from ortools.sat.python import cp_model
 
@@ -154,6 +156,13 @@ def allocate_rooms(db, session_id: int) -> dict:
         raise ValueError(f"Session {session_id} not found")
 
     room_inventory = session.room_inventory or {}
+    if isinstance(room_inventory, str):
+        try:
+            room_inventory = json.loads(room_inventory)
+        except Exception as json_err:
+            logger.warning(f"Could not parse room_inventory JSON string: {json_err}")
+            room_inventory = {}
+
     if not room_inventory:
         logger.warning(f"Session {session_id} has no room inventory configured.")
         return {"status": "NO_ROOM_INVENTORY", "rooms_allocated": 0, "unallocated_count": 0}
@@ -166,6 +175,7 @@ def allocate_rooms(db, session_id: int) -> dict:
             available_rooms[int(k)] = int(v)
         except (ValueError, TypeError):
             logger.warning(f"Invalid room_inventory key/value: {k}={v}")
+
 
     # ── 2. Load Students with Traits ──────────────────────────────────────────
     students = db.execute(text("""

@@ -18,7 +18,15 @@ def create_allocation_session(db: Session, session: AllocationSessionCreate) -> 
 
     # Validate room inventory capacity if provided
     if session.room_inventory:
-        total_beds = sum(int(k) * v for k, v in session.room_inventory.items())
+        inv = session.room_inventory
+        if isinstance(inv, str):
+            import json
+            try:
+                inv = json.loads(inv)
+            except Exception:
+                inv = {}
+        total_beds = sum(int(k) * v for k, v in inv.items())
+
         if total_beds < session.session_size:
             raise ValidationError(
                 f"Room inventory only has {total_beds} beds but session requires "
