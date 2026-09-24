@@ -12,7 +12,7 @@
 > Random hostel room allocation often creates roommate conflicts. CoHabit-AI automatically interviews students and uses mathematical optimization to recommend highly compatible roommates, saving administrative time and improving student life.
 
 ## 🔗 Live Demo
-**[Experience CoHabit-AI Live Here](https://cohabit-api-mo1f.onrender.com/)**
+**[Experience CoHabit-AI Live Here](https://cohabit-ai-2-0.onrender.com/)**
 
 ---
 
