@@ -2,7 +2,7 @@
   <h1>🏢 CoHabit-AI</h1>
   <p><strong>Intelligent Hostel Roommate Allocations using AI & Constraint Programming</strong></p>
 
-  <a href="https://cohabit-api-mo1f.onrender.com/">
+  <a href="https://cohabit-ai-2-0.onrender.com/">
     <img src="https://img.shields.io/badge/Live_Demo-Available-0284c7?style=for-the-badge&logo=render" alt="Live Demo" />
   </a>
 </div>
