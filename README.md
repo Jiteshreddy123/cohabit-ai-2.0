@@ -27,8 +27,35 @@
 - **Frontend:** React 18, Tailwind CSS, Lucide Icons
 - **Backend:** Python, FastAPI, SQLAlchemy
 - **Database:** PostgreSQL
-- **AI Engine:** Google Gemini Pro
+- **AI Engine:** Google Gemini Pro / 2.5 Flash
 - **Optimization:** Google OR-Tools (CP-SAT Solver)
 
+---
+
+## 📐 System Design & Architecture
+
+CoHabit-AI solves a complex **NP-hard Capacitated Bin-Packing & Graph Partitioning** problem with multi-occupancy rooms and global utility optimization.
+
+```mermaid
+flowchart LR
+    A[Student AI Interview] --> B[Gemini Trait Extraction]
+    B --> C[Pairwise Compatibility Matrix]
+    C --> D[Google OR-Tools CP-SAT Solver]
+    D --> E[Optimal Room Assignments]
+```
+
+### Key Architectural Highlights
+- **Mathematical Optimization via CP-SAT:** Enforces hard constraints (gender segregation, room capacity) and linearizes quadratic cohabitation objectives using boolean auxiliary variables.
+- **Symmetry Breaking:** Eliminates $R!$ redundant search paths by constraining room occupancy order ($\sum x_{s,r} \le \sum x_{s,r-1}$).
+- **Resilient AI Pipeline:** Pydantic schema validation, value clamping $[0.0, 1.0]$, and a deterministic heuristic fallback if the LLM API throttles.
+- **Circular Time Math:** Handles midnight wrap-around for bedtime/wake-up comparisons via $\Delta t = \min(|t_1 - t_2|, 1440 - |t_1 - t_2|)$.
+- **Scaling Strategy:** Employs hierarchical partitioning (deterministic slicing $\rightarrow$ spatial clustering) to scale from hundreds to $50,000+$ students without combinatorial solver explosion.
+
+👉 **Read the full [System Design & Architecture Document](docs/SYSTEM_DESIGN.md)** for deep dives into mathematical proofs, asynchronous task queue design, and interview cheat sheets.
+
+---
+
 ## 📖 Complete Documentation
-For a deep dive into every file, concept, and line of logic, open the **`CoHabit-AI_Complete_Guide.html`** file included in this repository in your web browser.
+- **Architecture & System Design:** [`docs/SYSTEM_DESIGN.md`](docs/SYSTEM_DESIGN.md)
+- **Interactive Repository Guide:** Open **`CoHabit-AI_Complete_Guide.html`** in your browser for a deep dive into every file, schema, and API endpoint.
+
